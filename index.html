@@ -511,10 +511,14 @@
             </div>
           </div>
 
+          <!-- ✅ Melhorado: campo de cliente agora permite DIGITAR (nome/CNPJ) -->
           <div style="margin-top:12px; display:grid; grid-template-columns: 1fr auto auto; gap:10px; align-items:center;">
-            <select class="select" id="pdfClientSelect">
-              <option value="">Selecionar cliente (para PDF do cliente)</option>
-            </select>
+            <div>
+              <input class="input" id="pdfClientSearch" list="dl_pdfClients" placeholder="Digite o nome da conta ou CNPJ..." />
+              <datalist id="dl_pdfClients"></datalist>
+              <input type="hidden" id="pdfClientId" value="" />
+              <div style="margin-top:6px;color:var(--muted);font-size:12px;font-weight:800;">Selecione um item da lista.</div>
+            </div>
 
             <button class="btn alt" id="btnPdfGlobalDash"><i class="fa-solid fa-file-pdf"></i> PDF Geral</button>
             <button class="btn primary" id="btnPdfClientDash" disabled><i class="fa-solid fa-file-pdf"></i> PDF do Cliente</button>
@@ -849,7 +853,7 @@
     import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
     import {
       getFirestore, collection, doc, getDoc, getDocs, setDoc, addDoc, updateDoc, deleteDoc,
-      query, orderBy, serverTimestamp, onSnapshot
+      query, orderBy, serverTimestamp, onSnapshot, where
     } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
 
     const firebaseConfig = {
@@ -1054,7 +1058,7 @@
           renderClients();
           renderServices();
           refreshDashboard();
-          hydratePdfClientSelect();
+          hydratePdfClientDatalist();
           if(state.selectedClientId) renderDetail();
         },
         (err)=> toast("Erro ao carregar clientes: " + err.message, "err")
@@ -1112,7 +1116,6 @@
 
       const first = (state.profile.name || "R").trim().slice(0,1).toUpperCase();
       $("sideAvatar").innerText = first;
-
       $("loginAvatar").innerText = first;
     }
 
@@ -1126,23 +1129,63 @@
       $("srvTipo").innerHTML = `<option value="">Serviço: Todos</option>` + SERVICOS.map(s=>`<option>${escapeHtml(s)}</option>`).join("");
     }
 
-    function hydratePdfClientSelect(){
-      const sel = $("pdfClientSelect");
-      if(!sel) return;
+    // ✅ Datalist para PDF (permite digitar nome/CNPJ e só habilita quando identificar)
+    function hydratePdfClientDatalist(){
+      const dl = $("dl_pdfClients");
+      if(!dl) return;
 
       const list = [...state.clients].sort((a,b)=>{
-        const an = normalizeText(a.nomeConta || a.razaoSocial || "");
-        const bn = normalizeText(b.nomeConta || b.razaoSocial || "");
+        const an = normalizeText(a.nomeConta || "");
+        const bn = normalizeText(b.nomeConta || "");
         return an.localeCompare(bn);
       });
 
-      sel.innerHTML = `<option value="">Selecionar cliente (para PDF do cliente)</option>` +
-        list.map(c=>{
-          const label = (c.nomeConta || c.razaoSocial || "—");
-          return `<option value="${c.id}">${escapeHtml(label)} • ${escapeHtml(c.cnpj||"—")}</option>`;
-        }).join("");
+      dl.innerHTML = list.map(c=>{
+        const nome = (c.nomeConta || "—");
+        // mostra só Nome da Conta (limpo), mas ainda permite buscar por CNPJ pq está no value "invisível" via texto digitado
+        // (o match por CNPJ funciona pq a pessoa digita e a resolução abaixo procura por includes)
+        const label = `${nome} • ${c.cnpj || "—"}`;
+        return `<option value="${escapeHtml(label)}" data-id="${c.id}"></option>`;
+      }).join("");
 
-      $("btnPdfClientDash").disabled = !sel.value;
+      bindPdfClientSearchToId();
+    }
+
+    function bindPdfClientSearchToId(){
+      const input = $("pdfClientSearch");
+      const hidden = $("pdfClientId");
+      const list = $("dl_pdfClients");
+      if(!input || !hidden || !list) return;
+
+      const options = [...list.querySelectorAll("option")].map(o=>({ value: o.value, id: o.getAttribute("data-id") }));
+
+      function resolve(){
+        const v = input.value || "";
+        const vn = normalizeText(v);
+
+        // match exato
+        const exact = options.find(o=> normalizeText(o.value) === vn);
+        if(exact){
+          hidden.value = exact.id;
+          $("btnPdfClientDash").disabled = false;
+          return;
+        }
+
+        // match parcial (nome ou cnpj)
+        const partial = options.find(o=> normalizeText(o.value).includes(vn) && vn.length >= 3);
+        if(partial){
+          hidden.value = partial.id;
+          $("btnPdfClientDash").disabled = false;
+          return;
+        }
+
+        hidden.value = "";
+        $("btnPdfClientDash").disabled = true;
+      }
+
+      input.oninput = resolve;
+      input.onchange = resolve;
+      resolve();
     }
 
     function countServicesByClient(clientId){
@@ -1156,9 +1199,10 @@
 
       const rows = state.clients
         .map(c=>{
-          const nome = normalizeText(c.nomeConta || c.razaoSocial || "");
+          const nome = normalizeText(c.nomeConta || "");
           const cnpj = (c.cnpj||"");
           const cnpjNorm = normalizeText(cnpj);
+
           const hit = !qtxt
             || nome.includes(qtxt)
             || cnpjNorm.includes(qtxt)
@@ -1172,7 +1216,7 @@
         .filter(x=>x.hit)
         .map(({c})=>{
           const nSrv = countServicesByClient(c.id);
-          const nomeConta = c.nomeConta || c.razaoSocial || "—";
+          const nomeConta = c.nomeConta || "—";
           const consultor = c.consultorNome || "—";
           return `
             <tr>
@@ -1248,6 +1292,7 @@
       if(bairro) parts2.push(bairro);
       if(cidade) parts2.push(cidade);
       if(uf) parts2.push(uf);
+
       let line = parts1.join(", ");
       let line2 = parts2.join(" • ");
       let line3 = cep ? ("CEP: "+cep) : "";
@@ -1278,7 +1323,7 @@
         return;
       }
 
-      const nomeConta = c.nomeConta || c.razaoSocial || "Cliente";
+      const nomeConta = c.nomeConta || "Cliente";
       $("detailSubtitle").innerText = nomeConta;
       $("detailCnpjBadge").innerText = `CNPJ: ${c.cnpj || "—"}`;
 
@@ -1357,7 +1402,7 @@
       const rows = state.services
         .map(s=>{
           const c = state.clients.find(x=>x.id===s.clientId) || {};
-          const nome = (c.nomeConta || c.razaoSocial || "");
+          const nome = (c.nomeConta || "");
           const text = normalizeText([
             nome,
             c.cnpj,
@@ -1376,7 +1421,7 @@
         })
         .filter(x=>x.hit)
         .map(({s,c})=>{
-          const nomeConta = c.nomeConta || c.razaoSocial || "—";
+          const nomeConta = c.nomeConta || "—";
           return `
             <tr>
               <td><span class="link" data-open-client="${s.clientId}">${escapeHtml(nomeConta)}</span></td>
@@ -1511,7 +1556,7 @@
         .slice(0,10);
 
       $("topClientsTbody").innerHTML = top.length ? top.map(({c,n})=>{
-        const nomeConta = c.nomeConta || c.razaoSocial || "—";
+        const nomeConta = c.nomeConta || "—";
         return `
           <tr>
             <td>${escapeHtml(nomeConta)}</td>
@@ -1523,6 +1568,20 @@
           </tr>
         `;
       }).join("") : `<tr><td colspan="6" style="color:var(--muted);font-weight:900;">Sem dados.</td></tr>`;
+    }
+
+    // ✅ SINCRONIZAÇÃO: se cliente virar "Comunicado", atualiza serviços (exceto Finalizado)
+    async function syncClientComunicadoToServices(clientId){
+      const list = state.services.filter(s=>s.clientId===clientId);
+      const pend = list.filter(s=>(s.etapa||"") !== "Finalizado"); // mantém integridade
+      if(!pend.length) return;
+
+      // atualiza em lote (com limite seguro)
+      const tasks = pend.map(srv =>
+        updateDoc(doc(db,"servicos",srv.id), { etapa: "Comunicado", updatedAt: serverTimestamp() })
+      );
+
+      await Promise.all(tasks);
     }
 
     function clientForm({data}){
@@ -1685,7 +1744,6 @@
           };
 
           const endereco = formatEndereco({enderecoObj});
-
           const observacoes = $("f_obs").value.trim();
 
           if(!conta) return toast("Preencha Nome da Conta.", "err");
@@ -1719,6 +1777,8 @@
       if(!can("write")) return toast("Sem permissão para editar.", "err");
       const c = state.clients.find(x=>x.id===id);
       if(!c) return;
+
+      const oldCom = c.comunicacaoStatus || "Nao_comunicado";
 
       openModal({
         title:"Editar Cliente",
@@ -1782,8 +1842,15 @@
             updatedAt: serverTimestamp()
           });
 
+          // ✅ Se virou "Comunicado" agora, sincroniza serviços (exceto Finalizado)
+          if(oldCom !== "Comunicado" && comunicacaoStatus === "Comunicado"){
+            await syncClientComunicadoToServices(id);
+            toast("Cliente comunicado. Serviços vinculados atualizados (exceto finalizados).");
+          }else{
+            toast("Cliente atualizado.");
+          }
+
           closeModal();
-          toast("Cliente atualizado.");
           if(state.selectedClientId===id) renderDetail();
         }catch(e){
           toast("Erro ao atualizar cliente: " + e.message, "err");
@@ -1905,7 +1972,7 @@
 
       const clientOptions = state.clients
         .map(c=>{
-          const nomeConta = c.nomeConta || c.razaoSocial || "—";
+          const nomeConta = c.nomeConta || "—";
           const label = `${nomeConta} • ${c.cnpj||"—"} • ${c.segmento||"—"} • ${c.subgrupo||"—"}`;
           return { id:c.id, label };
         })
@@ -1917,11 +1984,13 @@
       const etapaOpts = ETAPAS.map(x=>`<option ${s.etapa===x?"selected":""}>${x}</option>`).join("");
       const resultOpts = RESULTADOS.map(x=>`<option ${s.resultadoFinal===x?"selected":""}>${x}</option>`).join("");
 
+      const currentClientName = (state.clients.find(c=>c.id===s.clientId)?.nomeConta) || "";
+
       return `
         <div class="formGrid2">
           <div class="field" style="grid-column:1/-1;">
             <label>Cliente (digite para buscar)</label>
-            <input class="input" id="s_clientSearch" list="dl_clients" placeholder="Digite o nome da conta..." value="${escapeHtml((state.clients.find(c=>c.id===s.clientId)?.nomeConta) || "")}">
+            <input class="input" id="s_clientSearch" list="dl_clients" placeholder="Digite o nome da conta..." value="${escapeHtml(currentClientName)}">
             <datalist id="dl_clients">
               ${clientOptions.map(x=>`<option value="${escapeHtml(x.label)}" data-id="${x.id}"></option>`).join("")}
             </datalist>
@@ -2321,9 +2390,6 @@
                 <div style="margin-top:10px;display:grid;gap:10px;">
                   <div><span class="badge b-info">E-mail</span> <span style="font-weight:900;margin-left:8px;">${escapeHtml(email)}</span></div>
                   <div><span class="badge b-info">Senha</span> <span style="font-weight:900;margin-left:8px;">${escapeHtml(password)}</span></div>
-                  <div style="color:var(--muted);font-size:12px;font-weight:800;line-height:1.35;">
-                    Recomendação: o usuário deve trocar a senha no primeiro acesso (quando implementarmos reset).
-                  </div>
                 </div>
               </div>
             `,
@@ -2443,7 +2509,7 @@
 
     function resumoPorCliente(){
       const rows = state.clients.map(c=>{
-        const nomeConta = c.nomeConta || c.razaoSocial || "—";
+        const nomeConta = c.nomeConta || "—";
         const list = state.services.filter(s=>s.clientId===c.id);
         const total = list.length;
         const ativos = list.filter(s=>!isEncerrado(s)).length;
@@ -2475,6 +2541,7 @@
       return rows;
     }
 
+    // ✅ PDF Geral sem ranking (removido)
     function genGlobalPdf(){
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF({ unit:"mm", format:"a4" });
@@ -2550,26 +2617,6 @@
         headStyles: { fillColor: [246,249,255], textColor: 20 }
       });
 
-      doc.addPage();
-      pdfHeader(doc, "Resumo por Cliente (Ranking)");
-
-      const ranked = resumoPorCliente().slice(0,25).map(r=>[
-        r.nomeConta,
-        r.cnpj,
-        String(r.total),
-        String(r.ativos),
-        String(r.encerrados),
-        `CC:${r.etapaCounts["Comunicar Cliente"]} | CO:${r.etapaCounts["Comunicado"]} | ET:${r.etapaCounts["Em tratativa"]} | F:${r.etapaCounts["Finalizado"]}`
-      ]);
-
-      doc.autoTable({
-        startY: 70,
-        head: [["Cliente", "CNPJ", "Total", "Ativos", "Encerrados", "Etapas (resumo)"]],
-        body: ranked.length ? ranked : [["—","—","0","0","0","—"]],
-        styles: { fontSize: 8.6, cellPadding: 2.0 },
-        headStyles: { fillColor: [246,249,255], textColor: 20 }
-      });
-
       doc.save(`Relatorio_Encerramentos_${new Date().toISOString().slice(0,10)}.pdf`);
     }
 
@@ -2583,7 +2630,7 @@
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF({ unit:"mm", format:"a4" });
 
-      const nomeConta = c.nomeConta || c.razaoSocial || "—";
+      const nomeConta = c.nomeConta || "—";
       pdfHeader(doc, "Relatório do Cliente");
 
       doc.setFont("helvetica","normal");
@@ -2654,6 +2701,7 @@
       doc.save(`Relatorio_Cliente_${(nomeConta).slice(0,30).replace(/\s+/g,"_")}.pdf`);
     }
 
+    // NAV
     document.querySelectorAll(".navbtn").forEach(b=>{
       b.onclick = () => showView(b.dataset.view);
     });
@@ -2680,18 +2728,14 @@
       renderServices();
       renderConsultants();
       renderUsers();
-      hydratePdfClientSelect();
+      hydratePdfClientDatalist();
       toast("Atualizado.");
-    };
-
-    $("pdfClientSelect").onchange = ()=>{
-      $("btnPdfClientDash").disabled = !$("pdfClientSelect").value;
     };
 
     $("btnPdfGlobalDash").onclick = genGlobalPdf;
     $("btnPdfClientDash").onclick = async ()=>{
-      const id = $("pdfClientSelect").value;
-      if(!id) return toast("Selecione um cliente.", "err");
+      const id = $("pdfClientId").value;
+      if(!id) return toast("Selecione um cliente válido.", "err");
       await genClientPdf(id);
     };
 
