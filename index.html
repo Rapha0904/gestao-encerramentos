@@ -3,12 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Gestão de Encerramentos: Serviços e Acessorização</title>
+  <title>Gestão de Encerramentos: Serviços e Acessorização (Demo)</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
@@ -17,172 +16,96 @@
 
   <style>
     :root{
-      --bg0:#f4f7fb;
-      --bg1:#eef3fb;
-      --card:#ffffff;
-      --text:#0f172a;
-      --muted:#64748b;
-      --line:#e6edf7;
-
-      --primary:#0b5fff;
-      --primary2:#0847c9;
-      --danger:#ef4444;
-      --ok:#16a34a;
-      --warn:#f59e0b;
-      --soft:#f1f5ff;
-
-      --shadow: 0 12px 28px rgba(2, 6, 23, .08);
+      --bg0:#f4f7fb; --bg1:#eef3fb; --card:#ffffff;
+      --text:#0f172a; --muted:#64748b; --line:#e6edf7;
+      --primary:#0b5fff; --primary2:#0847c9;
+      --danger:#ef4444; --ok:#16a34a; --warn:#f59e0b;
       --shadow2: 0 6px 16px rgba(2, 6, 23, .08);
-      --radius: 18px;
-      --radius2: 14px;
+      --radius: 18px; --radius2: 14px;
     }
-
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
-      margin:0;
-      font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif;
-      color:var(--text);
+      margin:0; font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif; color:var(--text);
       background: radial-gradient(1200px 520px at 40% 0%, #ddeafe 0%, var(--bg0) 55%, var(--bg1) 100%);
       overflow:hidden;
     }
-
     .app{display:block;height:100vh;width:100vw;}
-
     .sidebar{
-      position:fixed;top:0;left:0;
-      width:310px;height:100vh;
-      padding:18px;
-      background: rgba(255,255,255,.72);
-      backdrop-filter: blur(12px);
+      position:fixed;top:0;left:0;width:310px;height:100vh;padding:18px;
+      background: rgba(255,255,255,.72);backdrop-filter: blur(12px);
       border-right:1px solid var(--line);
-      display:flex;flex-direction:column;gap:14px;
-      overflow:hidden;
-      z-index: 20;
+      display:flex;flex-direction:column;gap:14px;overflow:hidden;z-index:20;
     }
     .brand{
-      display:flex;gap:12px;align-items:center;
-      padding:12px 12px;border-radius: var(--radius);
+      display:flex;gap:12px;align-items:center;padding:12px 12px;border-radius: var(--radius);
       background: linear-gradient(180deg, rgba(255,255,255,.9), rgba(255,255,255,.6));
-      box-shadow: var(--shadow2);
-      border: 1px solid rgba(230,237,247,.7);
+      box-shadow: var(--shadow2); border: 1px solid rgba(230,237,247,.7);
     }
     .avatar{
       width:44px;height:44px;border-radius:14px;
       background: linear-gradient(135deg, #0b5fff, #0ea5e9);
-      display:grid;place-items:center;
-      color:#fff;font-weight:800;
+      display:grid;place-items:center;color:#fff;font-weight:800;
       box-shadow: 0 10px 18px rgba(11,95,255,.22);
-      flex: 0 0 auto;
-      overflow:hidden;
+      flex: 0 0 auto; overflow:hidden;
     }
-    .avatar img{width:100%;height:100%;object-fit:cover;display:block}
-    .brand h1{
-      font-size:14px;margin:0 0 2px 0;font-weight:800;
-      letter-spacing:.1px;
-      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-      max-width: 200px;
-    }
-    .brand .sub{
-      font-size:12px;color:var(--muted);margin:0;
-      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-      max-width: 220px;
-    }
+    .brand h1{font-size:14px;margin:0 0 2px 0;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px;}
+    .brand .sub{font-size:12px;color:var(--muted);margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:220px;}
     .brand .by{margin-top:4px;font-size:12px;color:#334155;font-weight:700;}
-
     .nav{
-      display:flex;flex-direction:column;gap:8px;
-      padding:6px;border-radius: var(--radius);
-      background: rgba(255,255,255,.55);
-      border:1px solid rgba(230,237,247,.7);
-      box-shadow: var(--shadow2);
-      overflow:hidden;
+      display:flex;flex-direction:column;gap:8px;padding:6px;border-radius: var(--radius);
+      background: rgba(255,255,255,.55);border:1px solid rgba(230,237,247,.7);
+      box-shadow: var(--shadow2);overflow:hidden;
     }
     .navbtn{
       border:0;background: transparent;cursor:pointer;
       display:flex;align-items:center;gap:12px;
-      padding:12px 12px;border-radius: 14px;
-      transition: .15s ease;color:#0f172a;
+      padding:12px 12px;border-radius: 14px;transition: .15s ease;color:#0f172a;
       font-weight:800;text-align:left;
     }
-    .navbtn .ic{
-      width:34px;height:34px;border-radius:12px;
-      display:grid;place-items:center;
-      background: #f1f5ff;color: var(--primary);
-      flex:0 0 auto;
-    }
+    .navbtn .ic{width:34px;height:34px;border-radius:12px;display:grid;place-items:center;background:#f1f5ff;color:var(--primary);flex:0 0 auto;}
     .navbtn small{display:block;color:var(--muted);font-weight:600;margin-top:2px;font-size:11px;}
     .navbtn:hover{transform: translateY(-1px); background: rgba(11,95,255,.06);}
     .navbtn.active{background: rgba(11,95,255,.12); outline: 1px solid rgba(11,95,255,.25);}
     .navhint{
       margin-top:auto;padding:12px;border-radius: var(--radius);
-      background: rgba(255,255,255,.62);
-      border:1px solid rgba(230,237,247,.7);
-      box-shadow: var(--shadow2);
-      color:var(--muted);font-size:12px;line-height:1.35;
+      background: rgba(255,255,255,.62);border:1px solid rgba(230,237,247,.7);
+      box-shadow: var(--shadow2);color:var(--muted);font-size:12px;line-height:1.35;
     }
     .pill{
       display:inline-flex;align-items:center;gap:8px;
-      padding:8px 10px;border-radius:999px;
-      background: rgba(11,95,255,.08);
-      border: 1px solid rgba(11,95,255,.18);
-      color:#0b3aa6;font-weight:900;font-size:12px;
+      padding:8px 10px;border-radius:999px;background: rgba(11,95,255,.08);
+      border: 1px solid rgba(11,95,255,.18);color:#0b3aa6;font-weight:900;font-size:12px;
       margin-top:10px;width:fit-content;
     }
-
-    .main{
-      height:100vh;overflow:auto;
-      padding:18px 22px 30px 22px;
-      margin-left:310px;
-    }
-
+    .main{height:100vh;overflow:auto;padding:18px 22px 30px 22px;margin-left:310px;}
     .topbar{
       display:flex;align-items:flex-start;justify-content:space-between;
       gap:16px;padding:16px 16px;border-radius: var(--radius);
-      background: rgba(255,255,255,.72);
-      border:1px solid rgba(230,237,247,.85);
-      box-shadow: var(--shadow2);
-      position: sticky;top: 12px;z-index: 50;
-      backdrop-filter: blur(12px);
+      background: rgba(255,255,255,.72);border:1px solid rgba(230,237,247,.85);
+      box-shadow: var(--shadow2);position: sticky;top: 12px;z-index: 50;backdrop-filter: blur(12px);
     }
     .title{display:flex;flex-direction:column;gap:6px;}
     .title h2{margin:0;font-size:18px;font-weight:900;}
     .title .byline{margin:0;font-size:13px;color:#334155;font-weight:800;}
     .actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
-
     .btn{
-      border:0;cursor:pointer;
-      padding:10px 14px;border-radius: 999px;
+      border:0;cursor:pointer;padding:10px 14px;border-radius: 999px;
       font-weight:900;transition: .15s ease;
       display:inline-flex;align-items:center;gap:10px;
       box-shadow: 0 10px 18px rgba(2,6,23,.08);
-      background: #fff;
-      border:1px solid rgba(230,237,247,.9);
+      background: #fff;border:1px solid rgba(230,237,247,.9);
     }
     .btn:hover{transform: translateY(-1px);}
-    .btn.primary{
-      background: linear-gradient(180deg, var(--primary), var(--primary2));
-      color:#fff;border:0;
-      box-shadow: 0 14px 22px rgba(11,95,255,.22);
-    }
-    .btn.danger{
-      background: rgba(239,68,68,.08);
-      border: 1px solid rgba(239,68,68,.25);
-      color:#b91c1c;
-      box-shadow:none;
-    }
+    .btn.primary{background: linear-gradient(180deg, var(--primary), var(--primary2));color:#fff;border:0;box-shadow: 0 14px 22px rgba(11,95,255,.22);}
+    .btn.danger{background: rgba(239,68,68,.08);border: 1px solid rgba(239,68,68,.25);color:#b91c1c;box-shadow:none;}
     .btn.ghost{background: rgba(2,6,23,.02);box-shadow:none;}
-    .btn.alt{
-      background: linear-gradient(180deg, #06b6d4, #0891b2);
-      color:#fff;border:0;
-      box-shadow: 0 14px 22px rgba(6,182,212,.18);
-    }
+    .btn.alt{background: linear-gradient(180deg, #06b6d4, #0891b2);color:#fff;border:0;box-shadow: 0 14px 22px rgba(6,182,212,.18);}
     .btn:disabled{opacity:.6; cursor:not-allowed; transform:none;}
 
     .section{
       margin-top:14px;padding:16px;border-radius: var(--radius);
-      background: rgba(255,255,255,.78);
-      border:1px solid rgba(230,237,247,.9);
+      background: rgba(255,255,255,.78);border:1px solid rgba(230,237,247,.9);
       box-shadow: var(--shadow2);
     }
     .section h3{margin:0 0 6px 0;font-size:16px;font-weight:900}
@@ -190,94 +113,37 @@
 
     .grid4{display:grid;grid-template-columns: repeat(4, minmax(0,1fr));gap:12px;margin-top:12px;}
     .grid2{display:grid;grid-template-columns: repeat(2, minmax(0,1fr));gap:12px;margin-top:12px;}
-    .card{
-      background: var(--card);
-      border:1px solid rgba(230,237,247,.95);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow2);
-      padding:14px;overflow:hidden;
-    }
+    .card{background: var(--card);border:1px solid rgba(230,237,247,.95);border-radius: var(--radius);box-shadow: var(--shadow2);padding:14px;overflow:hidden;}
     .metric{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;}
     .metric .k{font-size:12px;color:var(--muted);font-weight:900;letter-spacing:.2px;text-transform:uppercase}
     .metric .v{font-size:34px;font-weight:900;margin-top:8px; line-height:1;}
     .metric .s{font-size:12px;color:var(--muted);font-weight:800; margin-top:6px;}
-    .chip{
-      width:38px;height:38px;border-radius:14px;
-      display:grid;place-items:center;
-      background: rgba(11,95,255,.10);
-      color: var(--primary);
-      border: 1px solid rgba(11,95,255,.20);
-      flex:0 0 auto;
-    }
-    .chip.cyan{
-      background: rgba(6,182,212,.12);
-      border-color: rgba(6,182,212,.22);
-      color:#0891b2;
-    }
-    .chip.ok{
-      background: rgba(22,163,74,.10);
-      border-color: rgba(22,163,74,.22);
-      color:#166534;
-    }
-    .chip.warn{
-      background: rgba(245,158,11,.12);
-      border-color: rgba(245,158,11,.25);
-      color:#92400e;
-    }
+    .chip{width:38px;height:38px;border-radius:14px;display:grid;place-items:center;background: rgba(11,95,255,.10);color: var(--primary);border: 1px solid rgba(11,95,255,.20);flex:0 0 auto;}
+    .chip.cyan{background: rgba(6,182,212,.12);border-color: rgba(6,182,212,.22);color:#0891b2;}
+    .chip.ok{background: rgba(22,163,74,.10);border-color: rgba(22,163,74,.22);color:#166534;}
+    .chip.warn{background: rgba(245,158,11,.12);border-color: rgba(245,158,11,.25);color:#92400e;}
 
     .chartWrap{position:relative;height:320px;max-height:320px;width:100%;}
     canvas{display:block; width:100% !important; height:100% !important;}
 
-    .filtersRow{
-      display:grid;
-      grid-template-columns: 1.2fr .6fr .6fr auto;
-      gap:10px;align-items:center;margin-top:12px;
-    }
+    .filtersRow{display:grid;grid-template-columns: 1.2fr .6fr .6fr auto;gap:10px;align-items:center;margin-top:12px;}
     .input, .select, .textarea{
-      width:100%;
-      padding:11px 12px;border-radius: 14px;
-      border:1px solid rgba(203,213,225,.7);
-      outline:none;background:#fff;
-      font-weight:800;color:#0f172a;
-      transition:.15s ease;
+      width:100%;padding:11px 12px;border-radius: 14px;border:1px solid rgba(203,213,225,.7);
+      outline:none;background:#fff;font-weight:800;color:#0f172a;transition:.15s ease;
     }
     .textarea{min-height:90px; resize:vertical;}
-    .input:focus,.select:focus,.textarea:focus{
-      border-color: rgba(11,95,255,.55);
-      box-shadow: 0 0 0 4px rgba(11,95,255,.12);
-    }
-    .countPill{
-      padding:9px 12px;border-radius: 999px;
-      background: rgba(2,6,23,.03);
-      border:1px solid rgba(230,237,247,.95);
-      font-weight:900;color:#334155;
-      white-space:nowrap;text-align:center;
-    }
+    .input:focus,.select:focus,.textarea:focus{border-color: rgba(11,95,255,.55);box-shadow: 0 0 0 4px rgba(11,95,255,.12);}
+    .countPill{padding:9px 12px;border-radius: 999px;background: rgba(2,6,23,.03);border:1px solid rgba(230,237,247,.95);font-weight:900;color:#334155;white-space:nowrap;text-align:center;}
 
     table{width:100%; border-collapse:separate; border-spacing:0; overflow:hidden;}
     thead th{
-      text-align:left;font-size:12px;color:#475569;font-weight:900;
-      padding:10px 10px;background: #f6f9ff;
-      border-bottom:1px solid rgba(230,237,247,.95);
-      position: sticky;top: 0;z-index: 1;
+      text-align:left;font-size:12px;color:#475569;font-weight:900;padding:10px 10px;background: #f6f9ff;
+      border-bottom:1px solid rgba(230,237,247,.95);position: sticky;top: 0;z-index: 1;
     }
-    tbody td{
-      padding:12px 10px;border-bottom:1px solid rgba(230,237,247,.95);
-      font-size:13px;font-weight:800;color:#0f172a;vertical-align:top;
-    }
+    tbody td{padding:12px 10px;border-bottom:1px solid rgba(230,237,247,.95);font-size:13px;font-weight:800;color:#0f172a;vertical-align:top;}
     tbody tr:hover{background: rgba(11,95,255,.04);}
-    .link{
-      color: var(--primary);
-      cursor:pointer;text-decoration:underline;
-      text-underline-offset:3px;font-weight:900;
-    }
-    .badge{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:7px 10px;border-radius:999px;
-      font-weight:900;font-size:12px;
-      border:1px solid rgba(230,237,247,.95);
-      background:#fff;white-space:nowrap;
-    }
+    .link{color: var(--primary);cursor:pointer;text-decoration:underline;text-underline-offset:3px;font-weight:900;}
+    .badge{display:inline-flex;align-items:center;gap:8px;padding:7px 10px;border-radius:999px;font-weight:900;font-size:12px;border:1px solid rgba(230,237,247,.95);background:#fff;white-space:nowrap;}
     .b-warn{background: rgba(245,158,11,.10); border-color: rgba(245,158,11,.25); color:#92400e;}
     .b-ok{background: rgba(22,163,74,.10); border-color: rgba(22,163,74,.25); color:#166534;}
     .b-info{background: rgba(11,95,255,.10); border-color: rgba(11,95,255,.25); color:#0b3aa6;}
@@ -291,22 +157,12 @@
     .kv .v{font-weight:900; font-size:13px; color:#0f172a;}
     .statsRow{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 6px 0;}
 
-    .modalOverlay{
-      position:fixed; inset:0;background: rgba(2,6,23,.40);
-      display:none;align-items:center;justify-content:center;
-      z-index: 1000;padding:18px;
-    }
+    .modalOverlay{position:fixed; inset:0;background: rgba(2,6,23,.40);display:none;align-items:center;justify-content:center;z-index:1000;padding:18px;}
     .modal{
-      width:min(980px, 100%);max-height: 86vh;overflow:auto;
-      border-radius: 22px;background: rgba(255,255,255,.92);
-      border:1px solid rgba(230,237,247,.9);
-      box-shadow: 0 26px 60px rgba(2,6,23,.22);
-      backdrop-filter: blur(10px);
+      width:min(980px, 100%);max-height: 86vh;overflow:auto;border-radius: 22px;background: rgba(255,255,255,.92);
+      border:1px solid rgba(230,237,247,.9);box-shadow: 0 26px 60px rgba(2,6,23,.22);backdrop-filter: blur(10px);
     }
-    .modalHeader{
-      display:flex;align-items:flex-start;justify-content:space-between;
-      gap:12px;padding:16px 16px;border-bottom:1px solid rgba(230,237,247,.95);
-    }
+    .modalHeader{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:16px 16px;border-bottom:1px solid rgba(230,237,247,.95);}
     .modalHeader h4{margin:0;font-size:16px;font-weight:900}
     .modalHeader p{margin:4px 0 0 0;color:var(--muted);font-size:12px;font-weight:800}
     .modalBody{padding:14px 16px 16px 16px;}
@@ -315,42 +171,25 @@
     label{display:block; font-size:12px; font-weight:900; color:#475569; margin-bottom:6px; text-transform:uppercase; letter-spacing:.2px;}
     .field{display:flex; flex-direction:column;}
     .modalFooter{
-      display:flex;justify-content:flex-end;gap:10px;
-      padding:14px 16px 16px 16px;border-top:1px solid rgba(230,237,247,.95);
-      position: sticky;bottom: 0;
-      background: rgba(255,255,255,.92);
-      backdrop-filter: blur(10px);
+      display:flex;justify-content:flex-end;gap:10px;padding:14px 16px 16px 16px;border-top:1px solid rgba(230,237,247,.95);
+      position: sticky;bottom: 0;background: rgba(255,255,255,.92);backdrop-filter: blur(10px);
     }
 
-    .loginWrap{
-      height:100vh;display:grid;place-items:center;
-      padding:18px;overflow:auto;
-    }
+    .loginWrap{height:100vh;display:grid;place-items:center;padding:18px;overflow:auto;}
     .loginCard{
-      width:min(460px, 100%);border-radius: 24px;
-      background: rgba(255,255,255,.86);
-      border:1px solid rgba(230,237,247,.9);
-      box-shadow: 0 26px 60px rgba(2,6,23,.14);
-      padding:18px;backdrop-filter: blur(12px);
+      width:min(460px, 100%);border-radius: 24px;background: rgba(255,255,255,.86);
+      border:1px solid rgba(230,237,247,.9);box-shadow: 0 26px 60px rgba(2,6,23,.14);padding:18px;backdrop-filter: blur(12px);
     }
     .loginHead{display:flex; align-items:center; gap:12px;margin-bottom:10px;}
     .loginHead h2{margin:0; font-size:18px; font-weight:900;}
     .loginHead p{margin:2px 0 0 0; color:var(--muted); font-size:12px; font-weight:800;}
     .loginActions{display:flex; gap:10px; margin-top:10px;}
     .note{font-size:12px; color:var(--muted); font-weight:700; margin-top:10px; line-height:1.35;}
-    .err{
-      margin-top:10px;background: rgba(239,68,68,.10);
-      border:1px solid rgba(239,68,68,.25);
-      color:#991b1b;padding:10px 12px;border-radius: 14px;
-      font-weight:900;font-size:12px;display:none;
-    }
+    .err{margin-top:10px;background: rgba(239,68,68,.10);border:1px solid rgba(239,68,68,.25);color:#991b1b;padding:10px 12px;border-radius: 14px;font-weight:900;font-size:12px;display:none;}
 
     @media (max-width: 1060px){
       body{overflow:auto}
-      .sidebar{
-        position:sticky;width:100%;height:auto;
-        flex-direction:row;align-items:center;justify-content:space-between;
-      }
+      .sidebar{position:sticky;width:100%;height:auto;flex-direction:row;align-items:center;justify-content:space-between;}
       .nav{flex-direction:row; overflow:auto}
       .navhint{display:none}
       .main{margin-left:0}
@@ -364,33 +203,37 @@
 </head>
 
 <body>
-  <div id="loginView" class="loginWrap" style="display:none;">
+  <div id="loginView" class="loginWrap">
     <div class="loginCard">
       <div class="loginHead">
-        <div class="avatar" style="width:48px;height:48px;border-radius:16px;" id="loginAvatar">U</div>
+        <div class="avatar" style="width:48px;height:48px;border-radius:16px;" id="loginAvatar">R</div>
         <div>
           <h2>Gestão de Encerramentos</h2>
-          <p>Login para acessar o painel</p>
+          <p>Demo/Portfolio (sem banco de dados)</p>
         </div>
       </div>
 
       <div class="formGrid1">
         <div class="field">
           <label>E-mail</label>
-          <input id="loginEmail" class="input" placeholder="seuemail@empresa.com" />
+          <input id="loginEmail" class="input" placeholder="demo@exemplo.com" />
         </div>
         <div class="field">
           <label>Senha</label>
-          <input id="loginPass" type="password" class="input" placeholder="••••••••" />
+          <input id="loginPass" type="password" class="input" placeholder="demo" />
         </div>
       </div>
 
       <div class="loginActions">
         <button class="btn primary" id="btnLogin"><i class="fa-solid fa-right-to-bracket"></i> Entrar</button>
+        <button class="btn ghost" id="btnResetDemo"><i class="fa-solid fa-broom"></i> Reset demo</button>
       </div>
 
       <div id="loginErr" class="err"></div>
-      <div class="note"><b>Feito por: Raphael dos Santos</b></div>
+      <div class="note">
+        <b>Feito por: Raphael dos Santos</b><br/>
+        Use <b>senha: demo</b> para acessar.
+      </div>
     </div>
   </div>
 
@@ -400,7 +243,7 @@
         <div class="avatar" id="sideAvatar">R</div>
         <div style="min-width:0;">
           <h1>Gestão de Encerramentos</h1>
-          <p class="sub" id="sideUserLine">—</p>
+          <p class="sub" id="sideUserLine">Demo • perfil: admin</p>
           <div class="by">Por: Raphael dos Santos</div>
         </div>
       </div>
@@ -428,14 +271,14 @@
         </button>
         <button class="navbtn" data-view="access">
           <span class="ic"><i class="fa-solid fa-lock"></i></span>
-          <span>Acessos<small>Convites & permissões</small></span>
+          <span>Acessos<small>Demo local</small></span>
         </button>
       </div>
 
       <div class="navhint">
         <b>Dica:</b> use a busca para localizar rapidamente.<br/>
         Clique no <b>nome da conta</b> para abrir o detalhe.
-        <div class="pill"><i class="fa-solid fa-shield-halved"></i> <span id="rolePill">perfil: —</span></div>
+        <div class="pill"><i class="fa-solid fa-shield-halved"></i> <span id="rolePill">perfil: admin</span></div>
       </div>
     </aside>
 
@@ -443,7 +286,7 @@
       <div class="topbar">
         <div class="title">
           <h2>Gestão de Encerramentos: Serviços e Acessorização</h2>
-          <p class="byline">Por: Raphael dos Santos</p>
+          <p class="byline">Demo/Portfolio • Por: Raphael dos Santos</p>
         </div>
         <div class="actions">
           <button class="btn ghost" id="btnRefresh"><i class="fa-solid fa-rotate"></i> Atualizar</button>
@@ -453,7 +296,7 @@
 
       <section id="view_dashboard" class="section">
         <h3>Painel Executivo</h3>
-        <p>Indicadores principais + relatórios executivos.</p>
+        <p>Indicadores principais + relatórios executivos (demo sem banco).</p>
 
         <div class="grid4">
           <div class="card">
@@ -506,12 +349,11 @@
             <div>
               <div style="font-weight:900;">Relatórios</div>
               <div style="color:var(--muted);font-size:12px;font-weight:800;margin-top:4px;">
-                Gere o PDF geral ou por cliente (emitido pelo usuário logado).
+                Gere PDF geral ou por cliente (com dados demo).
               </div>
             </div>
           </div>
 
-          <!-- ✅ Melhorado: campo de cliente agora permite DIGITAR (nome/CNPJ) -->
           <div style="margin-top:12px; display:grid; grid-template-columns: 1fr auto auto; gap:10px; align-items:center;">
             <div>
               <input class="input" id="pdfClientSearch" list="dl_pdfClients" placeholder="Digite o nome da conta ou CNPJ..." />
@@ -535,9 +377,7 @@
                 </div>
               </div>
             </div>
-            <div class="chartWrap">
-              <canvas id="chartResolucao"></canvas>
-            </div>
+            <div class="chartWrap"><canvas id="chartResolucao"></canvas></div>
           </div>
 
           <div class="card">
@@ -547,9 +387,7 @@
                 <div style="color:var(--muted);font-size:12px;font-weight:800;margin-top:4px;">Fluxo do processo</div>
               </div>
             </div>
-            <div class="chartWrap">
-              <canvas id="chartEtapa"></canvas>
-            </div>
+            <div class="chartWrap"><canvas id="chartEtapa"></canvas></div>
           </div>
         </div>
 
@@ -563,14 +401,7 @@
           <div style="margin-top:10px; overflow:auto; max-height:360px;">
             <table>
               <thead>
-                <tr>
-                  <th>Cliente</th>
-                  <th>CNPJ</th>
-                  <th>Segmento</th>
-                  <th>Subgrupo</th>
-                  <th>Serviços</th>
-                  <th>Comunicação</th>
-                </tr>
+                <tr><th>Cliente</th><th>CNPJ</th><th>Segmento</th><th>Subgrupo</th><th>Serviços</th><th>Comunicação</th></tr>
               </thead>
               <tbody id="topClientsTbody">
                 <tr><td colspan="6" style="color:var(--muted);font-weight:900;">Carregando...</td></tr>
@@ -584,7 +415,7 @@
         <div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start;">
           <div>
             <h3>Clientes</h3>
-            <p>Cadastro/consulta de clientes. Clique no nome da conta para abrir o detalhe.</p>
+            <p>Cadastro/consulta (demo local). Clique no nome da conta para abrir o detalhe.</p>
           </div>
           <button class="btn primary" id="btnNewClient"><i class="fa-solid fa-plus"></i> Novo Cliente</button>
         </div>
@@ -600,14 +431,8 @@
           <table>
             <thead>
               <tr>
-                <th>Nome da Conta</th>
-                <th>CNPJ</th>
-                <th>Segmento</th>
-                <th>Subgrupo</th>
-                <th>Consultor</th>
-                <th>Comunicação</th>
-                <th>Serviços</th>
-                <th style="min-width:180px;">Ações</th>
+                <th>Nome da Conta</th><th>CNPJ</th><th>Segmento</th><th>Subgrupo</th>
+                <th>Consultor</th><th>Comunicação</th><th>Serviços</th><th style="min-width:180px;">Ações</th>
               </tr>
             </thead>
             <tbody id="clientsTbody">
@@ -640,14 +465,7 @@
               <div class="badge b-muted" id="detailCnpjBadge">CNPJ: —</div>
             </div>
 
-            <div class="statsRow" id="detailStatsRow">
-              <span class="badge b-muted">Serviços: —</span>
-              <span class="badge b-info">Comunicar Cliente: —</span>
-              <span class="badge b-info">Comunicado: —</span>
-              <span class="badge b-info">Em tratativa: —</span>
-              <span class="badge b-ok">Finalizado: —</span>
-            </div>
-
+            <div class="statsRow" id="detailStatsRow"></div>
             <div id="detailKV" style="margin-top:8px;"></div>
 
             <div style="margin-top:10px;">
@@ -660,23 +478,15 @@
             <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;">
               <div>
                 <div style="font-weight:900;">Contatos</div>
-                <div style="color:var(--muted);font-size:12px;font-weight:800;margin-top:4px;">Cadastre e-mails e telefones</div>
+                <div style="color:var(--muted);font-size:12px;font-weight:800;margin-top:4px;">Cadastre e-mails e telefones (demo)</div>
               </div>
               <button class="btn primary" id="btnAddContact"><i class="fa-solid fa-plus"></i> Adicionar</button>
             </div>
 
             <div style="margin-top:10px; overflow:auto; max-height:330px;">
               <table>
-                <thead>
-                  <tr>
-                    <th>Nome</th>
-                    <th>Contato</th>
-                    <th style="width:120px;">Ações</th>
-                  </tr>
-                </thead>
-                <tbody id="contactsTbody">
-                  <tr><td colspan="3" style="color:var(--muted);font-weight:900;">Sem contatos cadastrados.</td></tr>
-                </tbody>
+                <thead><tr><th>Nome</th><th>Contato</th><th style="width:120px;">Ações</th></tr></thead>
+                <tbody id="contactsTbody"></tbody>
               </table>
             </div>
           </div>
@@ -692,18 +502,9 @@
           <div style="margin-top:10px; overflow:auto; max-height:360px;">
             <table>
               <thead>
-                <tr>
-                  <th>Tipo</th>
-                  <th>Placa/Ativo</th>
-                  <th>Descontinuação</th>
-                  <th>Resolução</th>
-                  <th>Etapa</th>
-                  <th>Resultado</th>
-                </tr>
+                <tr><th>Tipo</th><th>Placa/Ativo</th><th>Descontinuação</th><th>Resolução</th><th>Etapa</th><th>Resultado</th></tr>
               </thead>
-              <tbody id="detailServicesTbody">
-                <tr><td colspan="6" style="color:var(--muted);font-weight:900;">Selecione um cliente.</td></tr>
-              </tbody>
+              <tbody id="detailServicesTbody"></tbody>
             </table>
           </div>
         </div>
@@ -713,16 +514,14 @@
         <div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start;">
           <div>
             <h3>Serviços</h3>
-            <p>Consulta e acompanhamento do fluxo.</p>
+            <p>Consulta e acompanhamento do fluxo (demo local).</p>
           </div>
           <button class="btn primary" id="btnNewService"><i class="fa-solid fa-plus"></i> Novo Serviço</button>
         </div>
 
         <div class="filtersRow" style="grid-template-columns: 1.2fr .8fr .8fr .8fr auto;">
           <input class="input" id="srvSearch" placeholder="Buscar por cliente, CNPJ, placa/ativo..." />
-          <select class="select" id="srvTipo">
-            <option value="">Serviço: Todos</option>
-          </select>
+          <select class="select" id="srvTipo"><option value="">Serviço: Todos</option></select>
           <select class="select" id="srvEtapa">
             <option value="">Etapa: Todas</option>
             <option>Comunicar Cliente</option>
@@ -745,19 +544,10 @@
           <table>
             <thead>
               <tr>
-                <th>Cliente</th>
-                <th>CNPJ</th>
-                <th>Tipo</th>
-                <th>Placa/Ativo</th>
-                <th>Resolução</th>
-                <th>Etapa</th>
-                <th>Resultado</th>
-                <th style="min-width:180px;">Ações</th>
+                <th>Cliente</th><th>CNPJ</th><th>Tipo</th><th>Placa/Ativo</th><th>Resolução</th><th>Etapa</th><th>Resultado</th><th style="min-width:180px;">Ações</th>
               </tr>
             </thead>
-            <tbody id="servicesTbody">
-              <tr><td colspan="8" style="color:var(--muted);font-weight:900;">Carregando...</td></tr>
-            </tbody>
+            <tbody id="servicesTbody"></tbody>
           </table>
         </div>
       </section>
@@ -766,7 +556,7 @@
         <div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start;">
           <div>
             <h3>Consultores</h3>
-            <p>Cadastre consultores com Segmento/Subgrupo.</p>
+            <p>Cadastre consultores com Segmento/Subgrupo (demo).</p>
           </div>
           <button class="btn primary" id="btnNewConsultant"><i class="fa-solid fa-plus"></i> Novo Consultor</button>
         </div>
@@ -780,18 +570,8 @@
 
         <div class="card" style="margin-top:12px; overflow:auto; max-height:520px;">
           <table>
-            <thead>
-              <tr>
-                <th>Nome</th>
-                <th>E-mail</th>
-                <th>Segmento</th>
-                <th>Subgrupo</th>
-                <th style="min-width:160px;">Ações</th>
-              </tr>
-            </thead>
-            <tbody id="consultantsTbody">
-              <tr><td colspan="5" style="color:var(--muted);font-weight:900;">Carregando...</td></tr>
-            </tbody>
+            <thead><tr><th>Nome</th><th>E-mail</th><th>Segmento</th><th>Subgrupo</th><th style="min-width:160px;">Ações</th></tr></thead>
+            <tbody id="consultantsTbody"></tbody>
           </table>
         </div>
       </section>
@@ -800,32 +580,22 @@
         <div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start;">
           <div>
             <h3>Acessos</h3>
-            <p>Somente <b>admin</b> cria acessos.</p>
+            <p>Demo local (sem criação real no Auth).</p>
           </div>
           <button class="btn primary" id="btnNewAccess"><i class="fa-solid fa-user-plus"></i> Criar Acesso</button>
         </div>
 
         <div class="card" style="margin-top:12px; overflow:auto; max-height:520px;">
           <table>
-            <thead>
-              <tr>
-                <th>Nome</th>
-                <th>E-mail</th>
-                <th>Perfil</th>
-                <th>Ativo</th>
-                <th style="min-width:140px;">Ações</th>
-              </tr>
-            </thead>
-            <tbody id="usersTbody">
-              <tr><td colspan="5" style="color:var(--muted);font-weight:900;">Carregando...</td></tr>
-            </tbody>
+            <thead><tr><th>Nome</th><th>E-mail</th><th>Perfil</th><th>Ativo</th><th style="min-width:140px;">Ações</th></tr></thead>
+            <tbody id="usersTbody"></tbody>
           </table>
         </div>
 
         <div class="card" style="margin-top:12px;">
           <div style="font-weight:900;">Observação</div>
           <div style="color:var(--muted);font-size:12px;font-weight:800;margin-top:6px;line-height:1.35;">
-            Para cenários corporativos mais restritos, o ideal é criar acessos via backend (Admin SDK / Cloud Function).
+            Versão de vitrine: dados em <b>LocalStorage</b>. Integração com backend/banco foi removida para segurança.
           </div>
         </div>
       </section>
@@ -848,26 +618,12 @@
     </div>
   </div>
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
-    import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
-    import {
-      getFirestore, collection, doc, getDoc, getDocs, setDoc, addDoc, updateDoc, deleteDoc,
-      query, orderBy, serverTimestamp, onSnapshot, where
-    } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyD9F1akk5iPA4h032A_y5pqqH47EegUai4",
-      authDomain: "gestao-descontinuacao-servicos.firebaseapp.com",
-      projectId: "gestao-descontinuacao-servicos",
-      storageBucket: "gestao-descontinuacao-servicos.firebasestorage.app",
-      messagingSenderId: "287979420532",
-      appId: "1:287979420532:web:404ccc7109c65032354a21"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
+  <script>
+    // =========================
+    //  DEMO / PORTFOLIO MODE
+    //  - sem Firebase
+    //  - dados locais (LocalStorage)
+    // =========================
 
     const SEGMENTOS = ["Leves", "Pesados"];
     const SUBGRUPOS = ["PME", "Farmer", "Hunter"];
@@ -876,39 +632,17 @@
       "GESTÃO DE COMBUSTÍVEL",
       "GESTÃO DE COMBUSTÍVEL - PLANO I (AUTO GESTÃO)",
       "GESTÃO DE COMBUSTÍVEL - PLANO II (GESTÃO DE ROTINA)",
-      "GESTÃO DE COMBUSTÍVEL - PLANO I AUTO GESTÃO - TICKETLOG",
-      "GESTÃO DE COMBUSTÍVEL - PLANO II GESTÃO UNIDAS - TICKET LOG",
-      "IAV - TAG OURO VERDE - CONECT CAR",
       "IAV - TAG VELOE",
       "TELEMETRIA - UTILIZAÇÃO",
       "TELEMETRIA - COMPORTAMENTO DO MOTORISTA",
-      "TELEMETRIA - AVANÇADO GEOTAB",
-      "TELEMETRIA - AVANÇADO GEOTAB COM ID CONDUTOR",
-      "TELEMETRIA - AVANÇADO GEOTAB COM ID CONDUTOR + BLOQUEADOR",
-      "TELEMETRIA BÁSICO GOLSAT COM ID CONDUTOR COMODATO",
-      "BASICO - RASTREAMENTO",
       "BÁSICO GOLSAT",
-      "BÁSICO GOLSAT COMODATO",
       "BÁSICO ITURAN",
-      "BÁSICO ITURAN COM ID CONDUTOR + BUZZER",
-      "LOCALIZAÇÃO ITURAN",
-      "LOCALIZACAO ITURAN PME COM BLOQUEADOR"
+      "LOCALIZAÇÃO ITURAN"
     ];
 
     const ETAPAS = ["Comunicar Cliente", "Comunicado", "Em tratativa", "Finalizado"];
     const RESULTADOS = ["Em andamento", "Descontinuado", "Cancelado", "Multa", "Devolução"];
     const RESOLUCOES = ["Sistêmica", "Física"];
-
-    const state = {
-      user: null,
-      profile: { role: "viewer", name: "—", active: true, email: "" },
-      clients: [],
-      services: [],
-      consultants: [],
-      users: [],
-      selectedClientId: null,
-      unsub: []
-    };
 
     const $ = (id) => document.getElementById(id);
 
@@ -979,13 +713,72 @@
       return et === "Finalizado" || rf === "Cancelado" || rf === "Descontinuado";
     }
 
-    function can(role){
-      const r = (state.profile.role || "viewer").toLowerCase();
-      if (role === "admin") return r === "admin";
-      if (role === "write") return r === "admin" || r === "operacional";
-      return true;
+    // -------------------------
+    // Storage (Local)
+    // -------------------------
+    const LS_KEY = "demo_gestao_encerramentos_v1";
+
+    function uuid(){
+      return "id_" + Math.random().toString(16).slice(2) + "_" + Date.now().toString(16);
     }
 
+    function seedData(){
+      const c1 = { id: uuid(), nomeConta:"Alpha Comércio", cnpj:"12.345.678/0001-90", segmento:"Leves", subgrupo:"PME", consultorNome:"Fernanda Ferreira", comunicacaoStatus:"Nao_comunicado", observacoes:"Cliente demo." , enderecoObj:{ cidade:"Curitiba", uf:"PR" }, contatos:[{id:uuid(), nome:"Contato 1", valor:"contato@alpha.com"}] };
+      const c2 = { id: uuid(), nomeConta:"Beta Transportes", cnpj:"98.765.432/0001-10", segmento:"Pesados", subgrupo:"Farmer", consultorNome:"João Alves", comunicacaoStatus:"Comunicado", observacoes:"Cliente demo (já comunicado).", enderecoObj:{ cidade:"São Paulo", uf:"SP" }, contatos:[] };
+
+      const s1 = { id: uuid(), clientId: c1.id, tipoServico:"TELEMETRIA - UTILIZAÇÃO", placaAtivo:"ABC1D23", emDescontinuacao:true, tipoResolucao:"Sistêmica", etapa:"Comunicar Cliente", resultadoFinal:"Em andamento", observacoes:"—" };
+      const s2 = { id: uuid(), clientId: c1.id, tipoServico:"GESTÃO DE COMBUSTÍVEL", placaAtivo:"DEF4G56", emDescontinuacao:true, tipoResolucao:"Física", etapa:"Em tratativa", resultadoFinal:"Em andamento", observacoes:"—" };
+      const s3 = { id: uuid(), clientId: c2.id, tipoServico:"BÁSICO ITURAN", placaAtivo:"HIJ7K89", emDescontinuacao:true, tipoResolucao:"Sistêmica", etapa:"Finalizado", resultadoFinal:"Descontinuado", observacoes:"Finalizado demo." };
+
+      const consultants = [
+        { id: uuid(), nome:"Fernanda Ferreira", email:"fernanda@empresa.com", segmento:"Leves", subgrupo:"PME" },
+        { id: uuid(), nome:"João Alves", email:"joao@empresa.com", segmento:"Pesados", subgrupo:"Farmer" }
+      ];
+
+      const users = [
+        { id: uuid(), name:"Admin Demo", email:"demo@exemplo.com", role:"admin", active:true },
+        { id: uuid(), name:"Operacional Demo", email:"operacional@exemplo.com", role:"operacional", active:true }
+      ];
+
+      return { clients:[c1,c2], services:[s1,s2,s3], consultants, users };
+    }
+
+    function loadStore(){
+      const raw = localStorage.getItem(LS_KEY);
+      if(!raw){
+        const seeded = seedData();
+        localStorage.setItem(LS_KEY, JSON.stringify(seeded));
+        return seeded;
+      }
+      try{
+        const obj = JSON.parse(raw);
+        // garantias mínimas
+        obj.clients ||= [];
+        obj.services ||= [];
+        obj.consultants ||= [];
+        obj.users ||= [];
+        return obj;
+      }catch{
+        const seeded = seedData();
+        localStorage.setItem(LS_KEY, JSON.stringify(seeded));
+        return seeded;
+      }
+    }
+
+    function saveStore(){
+      localStorage.setItem(LS_KEY, JSON.stringify(store));
+    }
+
+    let store = loadStore();
+
+    const state = {
+      profile: { role:"admin", name:"Demo", active:true, email:"" },
+      selectedClientId: null
+    };
+
+    // -------------------------
+    // UI helpers
+    // -------------------------
     function setNavActive(view){
       document.querySelectorAll(".navbtn").forEach(b=>{
         b.classList.toggle("active", b.dataset.view === view);
@@ -1007,9 +800,18 @@
       $("modalFooter").innerHTML = footerHtml || "";
       $("modalOverlay").style.display = "flex";
     }
-
     function closeModal(){ $("modalOverlay").style.display = "none"; }
 
+    function can(role){
+      const r = (state.profile.role || "viewer").toLowerCase();
+      if (role === "admin") return r === "admin";
+      if (role === "write") return r === "admin" || r === "operacional";
+      return true;
+    }
+
+    // -------------------------
+    // Charts
+    // -------------------------
     let chartResolucao = null;
     let chartEtapa = null;
 
@@ -1023,102 +825,19 @@
       chartResolucao = new Chart(ctx1, {
         type: "doughnut",
         data: { labels: ["Sistêmica","Física"], datasets:[{ data:[0,0], borderWidth:0 }] },
-        options: {
-          responsive:true,
-          maintainAspectRatio:false,
-          plugins:{ legend:{ position:"top" } },
-          cutout:"62%"
-        }
+        options: { responsive:true, maintainAspectRatio:false, plugins:{ legend:{ position:"top" } }, cutout:"62%" }
       });
 
       chartEtapa = new Chart(ctx2, {
         type: "bar",
         data: { labels: ETAPAS, datasets:[{ label:"Serviços", data:[0,0,0,0], borderWidth:0, borderRadius:10 }] },
-        options: {
-          responsive:true,
-          maintainAspectRatio:false,
-          plugins:{ legend:{ display:false } },
-          scales: { y: { beginAtZero:true, ticks:{ precision:0 } } }
-        }
+        options: { responsive:true, maintainAspectRatio:false, plugins:{ legend:{ display:false } }, scales: { y: { beginAtZero:true, ticks:{ precision:0 } } } }
       });
     }
 
-    function clearSubs(){
-      state.unsub.forEach(fn=>{ try{fn()}catch(e){} });
-      state.unsub = [];
-    }
-
-    function watchData(){
-      clearSubs();
-
-      state.unsub.push(onSnapshot(
-        query(collection(db,"clientes"), orderBy("createdAt","desc")),
-        (snap)=>{
-          state.clients = snap.docs.map(d=>({ id:d.id, ...d.data() }));
-          renderClients();
-          renderServices();
-          refreshDashboard();
-          hydratePdfClientDatalist();
-          if(state.selectedClientId) renderDetail();
-        },
-        (err)=> toast("Erro ao carregar clientes: " + err.message, "err")
-      ));
-
-      state.unsub.push(onSnapshot(
-        query(collection(db,"servicos"), orderBy("createdAt","desc")),
-        (snap)=>{
-          state.services = snap.docs.map(d=>({ id:d.id, ...d.data() }));
-          renderServices();
-          refreshDashboard();
-          if(state.selectedClientId) renderDetail();
-        },
-        (err)=> toast("Erro ao carregar serviços: " + err.message, "err")
-      ));
-
-      state.unsub.push(onSnapshot(
-        query(collection(db,"consultores"), orderBy("nome","asc")),
-        (snap)=>{
-          state.consultants = snap.docs.map(d=>({ id:d.id, ...d.data() }));
-          renderConsultants();
-          hydrateFilters();
-        },
-        (err)=> toast("Erro ao carregar consultores: " + err.message, "err")
-      ));
-
-      state.unsub.push(onSnapshot(
-        query(collection(db,"users"), orderBy("name","asc")),
-        (snap)=>{
-          state.users = snap.docs.map(d=>({ id:d.id, ...d.data() }));
-          renderUsers();
-        },
-        (err)=> toast("Erro ao carregar usuários: " + err.message, "err")
-      ));
-    }
-
-    async function loadProfile(uid){
-      const ref = doc(db,"users",uid);
-      const s = await getDoc(ref);
-
-      if(s.exists()){
-        const p = s.data();
-        state.profile = {
-          role: (p.role || "viewer"),
-          name: (p.name || "—"),
-          active: (p.active !== false),
-          email: (p.email || auth.currentUser?.email || "")
-        };
-      } else {
-        state.profile = { role:"viewer", name:"—", active:true, email: auth.currentUser?.email || "" };
-      }
-
-      $("sideUserLine").innerText = `${state.profile.name} • perfil: ${state.profile.role}`;
-      $("rolePill").innerText = `perfil: ${state.profile.role}`;
-
-      const first = (state.profile.name || "R").trim().slice(0,1).toUpperCase();
-      $("sideAvatar").innerText = first;
-      $("loginAvatar").innerText = first;
-    }
-
+    // -------------------------
+    // Filters hydration
+    // -------------------------
     function hydrateFilters(){
       $("cliSeg").innerHTML = `<option value="">Segmento: Todos</option>` + SEGMENTOS.map(s=>`<option>${s}</option>`).join("");
       $("cliSub").innerHTML = `<option value="">Subgrupo: Todos</option>` + SUBGRUPOS.map(s=>`<option>${s}</option>`).join("");
@@ -1126,28 +845,180 @@
       $("conSeg").innerHTML = `<option value="">Segmento: Todos</option>` + SEGMENTOS.map(s=>`<option>${s}</option>`).join("");
       $("conSub").innerHTML = `<option value="">Subgrupo: Todos</option>` + SUBGRUPOS.map(s=>`<option>${s}</option>`).join("");
 
-      $("srvTipo").innerHTML = `<option value="">Serviço: Todos</option>` + SERVICOS.map(s=>`<option>${escapeHtml(s)}</option>`).join("");
+      $("srvTipo").innerHTML = `<option value="">Serviço: Todos</option>` + [...SERVICOS].sort((a,b)=>normalizeText(a).localeCompare(normalizeText(b))).map(s=>`<option>${escapeHtml(s)}</option>`).join("");
     }
 
-    // ✅ Datalist para PDF (permite digitar nome/CNPJ e só habilita quando identificar)
-    function hydratePdfClientDatalist(){
-      const dl = $("dl_pdfClients");
-      if(!dl) return;
+    // -------------------------
+    // PDF
+    // -------------------------
+    function pdfHeader(doc, subtitle){
+      doc.setFont("helvetica","bold");
+      doc.setFontSize(16);
+      doc.text("Gestão de Encerramentos", 14, 20);
 
-      const list = [...state.clients].sort((a,b)=>{
-        const an = normalizeText(a.nomeConta || "");
-        const bn = normalizeText(b.nomeConta || "");
-        return an.localeCompare(bn);
+      doc.setFont("helvetica","normal");
+      doc.setFontSize(11);
+      doc.setTextColor(70);
+      doc.text("Demo/Portfolio (sem dados reais)", 14, 26);
+      doc.text(`Gerado em: ${nowStr()}`, 14, 32);
+      doc.setTextColor(0);
+
+      doc.setDrawColor(220);
+      doc.line(14, 36, 196, 36);
+
+      if(subtitle){
+        doc.setFont("helvetica","bold");
+        doc.setFontSize(12);
+        doc.text(subtitle, 14, 45);
+      }
+    }
+
+    function resumoPorCliente(){
+      const rows = store.clients.map(c=>{
+        const list = store.services.filter(s=>s.clientId===c.id);
+        return {
+          nomeConta: c.nomeConta || "—",
+          cnpj: c.cnpj || "—",
+          segmento: c.segmento || "—",
+          subgrupo: c.subgrupo || "—",
+          total: list.length,
+          ativos: list.filter(s=>!isEncerrado(s)).length,
+          encerrados: list.filter(s=>isEncerrado(s)).length,
+          pendCom: (c.comunicacaoStatus==="Comunicado") ? 0 : 1,
+        };
+      });
+      rows.sort((a,b)=> b.total - a.total);
+      return rows;
+    }
+
+    function genGlobalPdf(){
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ unit:"mm", format:"a4" });
+
+      pdfHeader(doc, "Relatório Executivo (Geral)");
+
+      const totalClients = store.clients.length;
+      const notificados = store.clients.filter(c=>c.comunicacaoStatus==="Comunicado").length;
+      const pendCom = Math.max(0, totalClients - notificados);
+      const encerrados = store.services.filter(s=>isEncerrado(s)).length;
+      const ativos = store.services.filter(s=>!isEncerrado(s)).length;
+
+      doc.autoTable({
+        startY: 52,
+        head: [["Indicador", "Valor"]],
+        body: [
+          ["Total de clientes", String(totalClients)],
+          ["Clientes notificados", String(notificados)],
+          ["Pendentes de comunicação", String(pendCom)],
+          ["Serviços ativos (em andamento)", String(ativos)],
+          ["Serviços encerrados (finalizado/desativado)", String(encerrados)]
+        ],
+        styles: { fontSize: 10, cellPadding: 2.8 },
+        headStyles: { fillColor: [246,249,255], textColor: 20 }
       });
 
+      const etapaCounts = ETAPAS.map(et=> [et, store.services.filter(s=>s.etapa===et).length]);
+      const resAtivos = store.services.filter(s=>!isEncerrado(s));
+      const resCounts = RESOLUCOES.map(r=> [r, resAtivos.filter(s=>s.tipoResolucao===r).length]);
+
+      let y = doc.lastAutoTable.finalY + 10;
+      doc.setFont("helvetica","bold"); doc.text("Etapas (Visão geral)", 14, y);
+      doc.autoTable({ startY: y + 4, head: [["Etapa","Quantidade"]], body: etapaCounts, styles:{fontSize:10, cellPadding:2.6}, headStyles:{fillColor:[246,249,255], textColor:20} });
+
+      y = doc.lastAutoTable.finalY + 10;
+      doc.setFont("helvetica","bold"); doc.text("Resolução (Apenas ativos)", 14, y);
+      doc.autoTable({ startY: y + 4, head: [["Tipo de Resolução","Quantidade"]], body: resCounts, styles:{fontSize:10, cellPadding:2.6}, headStyles:{fillColor:[246,249,255], textColor:20} });
+
+      const top = resumoPorCliente().slice(0,15).map(r=>[
+        r.nomeConta, r.cnpj, r.segmento, r.subgrupo,
+        String(r.total), String(r.ativos), String(r.encerrados), r.pendCom ? "Pendente" : "OK"
+      ]);
+
+      y = doc.lastAutoTable.finalY + 10;
+      doc.setFont("helvetica","bold"); doc.text("Top clientes (por serviços)", 14, y);
+      doc.autoTable({
+        startY: y + 4,
+        head: [["Cliente","CNPJ","Segmento","Subgrupo","Total","Ativos","Encerrados","Com."]],
+        body: top.length ? top : [["—","—","—","—","0","0","0","—"]],
+        styles:{fontSize:9, cellPadding:2.2},
+        headStyles:{fillColor:[246,249,255], textColor:20}
+      });
+
+      doc.save(`Relatorio_Encerramentos_DEMO_${new Date().toISOString().slice(0,10)}.pdf`);
+    }
+
+    async function genClientPdf(clientId){
+      const c = store.clients.find(x=>x.id===clientId);
+      if(!c) return toast("Selecione um cliente.", "err");
+      const services = store.services.filter(s=>s.clientId===clientId);
+      const contacts = (c.contatos || []);
+
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ unit:"mm", format:"a4" });
+
+      pdfHeader(doc, "Relatório do Cliente (Demo)");
+
+      doc.setFont("helvetica","normal");
+      doc.setFontSize(10);
+      doc.text(`Cliente: ${c.nomeConta || "—"}`, 14, 55);
+      doc.text(`CNPJ: ${c.cnpj || "—"}`, 14, 61);
+      doc.text(`Segmento/Subgrupo: ${c.segmento || "—"} / ${c.subgrupo || "—"}`, 14, 67);
+      doc.text(`Consultor: ${c.consultorNome || "—"}`, 14, 73);
+      doc.text(`Comunicação: ${c.comunicacaoStatus==="Comunicado" ? "Comunicado" : "Pendente"}`, 14, 79);
+
+      const encerrados = services.filter(s=>isEncerrado(s)).length;
+      const ativos = services.filter(s=>!isEncerrado(s)).length;
+
+      doc.setFont("helvetica","bold");
+      doc.text("Indicadores do Cliente", 14, 90);
+
+      doc.autoTable({
+        startY: 94,
+        head: [["Métrica", "Qtd"]],
+        body: [
+          ["Serviços (total)", String(services.length)],
+          ["Ativos (em andamento)", String(ativos)],
+          ["Encerrados", String(encerrados)]
+        ],
+        styles: { fontSize: 10, cellPadding: 2.6 },
+        headStyles: { fillColor: [246,249,255], textColor: 20 }
+      });
+
+      let y = doc.lastAutoTable.finalY + 10;
+      doc.setFont("helvetica","bold"); doc.text("Contatos", 14, y);
+      doc.autoTable({
+        startY: y + 4,
+        head: [["Nome", "Contato"]],
+        body: contacts.length ? contacts.map(ct=>[ct.nome || "—", ct.valor || "—"]) : [["—", "Sem contatos"]],
+        styles: { fontSize: 10, cellPadding: 2.6 },
+        headStyles: { fillColor: [246,249,255], textColor: 20 }
+      });
+
+      y = doc.lastAutoTable.finalY + 10;
+      doc.setFont("helvetica","bold"); doc.text("Serviços vinculados", 14, y);
+      doc.autoTable({
+        startY: y + 4,
+        head: [["Tipo", "Placa/Ativo", "Resolução", "Etapa", "Resultado"]],
+        body: services.length
+          ? services.map(s=>[s.tipoServico||"—", s.placaAtivo||"—", s.tipoResolucao||"—", s.etapa||"—", s.resultadoFinal||"—"])
+          : [["—","—","—","—","Sem serviços"]],
+        styles: { fontSize: 9, cellPadding: 2.2 },
+        headStyles: { fillColor: [246,249,255], textColor: 20 }
+      });
+
+      doc.save(`Relatorio_Cliente_DEMO_${(c.nomeConta||"Cliente").slice(0,30).replace(/\s+/g,"_")}.pdf`);
+    }
+
+    // -------------------------
+    // Datalist PDF client select
+    // -------------------------
+    function hydratePdfClientDatalist(){
+      const dl = $("dl_pdfClients");
+      const list = [...store.clients].sort((a,b)=> normalizeText(a.nomeConta||"").localeCompare(normalizeText(b.nomeConta||"")));
       dl.innerHTML = list.map(c=>{
-        const nome = (c.nomeConta || "—");
-        // mostra só Nome da Conta (limpo), mas ainda permite buscar por CNPJ pq está no value "invisível" via texto digitado
-        // (o match por CNPJ funciona pq a pessoa digita e a resolução abaixo procura por includes)
-        const label = `${nome} • ${c.cnpj || "—"}`;
+        const label = `${c.nomeConta || "—"} • ${c.cnpj || "—"}`;
         return `<option value="${escapeHtml(label)}" data-id="${c.id}"></option>`;
       }).join("");
-
       bindPdfClientSearchToId();
     }
 
@@ -1155,32 +1026,19 @@
       const input = $("pdfClientSearch");
       const hidden = $("pdfClientId");
       const list = $("dl_pdfClients");
-      if(!input || !hidden || !list) return;
-
-      const options = [...list.querySelectorAll("option")].map(o=>({ value: o.value, id: o.getAttribute("data-id") }));
+      const options = [...list.querySelectorAll("option")].map(o=>({ value:o.value, id:o.getAttribute("data-id") }));
 
       function resolve(){
         const v = input.value || "";
         const vn = normalizeText(v);
 
-        // match exato
         const exact = options.find(o=> normalizeText(o.value) === vn);
-        if(exact){
-          hidden.value = exact.id;
-          $("btnPdfClientDash").disabled = false;
-          return;
-        }
+        if(exact){ hidden.value = exact.id; $("btnPdfClientDash").disabled=false; return; }
 
-        // match parcial (nome ou cnpj)
-        const partial = options.find(o=> normalizeText(o.value).includes(vn) && vn.length >= 3);
-        if(partial){
-          hidden.value = partial.id;
-          $("btnPdfClientDash").disabled = false;
-          return;
-        }
+        const partial = options.find(o=> normalizeText(o.value).includes(vn) && vn.length>=3);
+        if(partial){ hidden.value = partial.id; $("btnPdfClientDash").disabled=false; return; }
 
-        hidden.value = "";
-        $("btnPdfClientDash").disabled = true;
+        hidden.value=""; $("btnPdfClientDash").disabled=true;
       }
 
       input.oninput = resolve;
@@ -1188,8 +1046,63 @@
       resolve();
     }
 
+    // -------------------------
+    // Render
+    // -------------------------
     function countServicesByClient(clientId){
-      return state.services.filter(s=>s.clientId===clientId).length;
+      return store.services.filter(s=>s.clientId===clientId).length;
+    }
+
+    function computeClientStats(clientId){
+      const all = store.services.filter(s=>s.clientId===clientId);
+      const byEt = (et) => all.filter(s=>(s.etapa||"")===et).length;
+      return { total: all.length, c0: byEt("Comunicar Cliente"), c1: byEt("Comunicado"), c2: byEt("Em tratativa"), c3: byEt("Finalizado") };
+    }
+
+    function refreshDashboard(){
+      const totalClients = store.clients.length;
+      const clientesNotificados = store.clients.filter(c=>c.comunicacaoStatus==="Comunicado").length;
+      const pendCom = Math.max(0, totalClients - clientesNotificados);
+
+      const finalizados = store.services.filter(s=> isEncerrado(s)).length;
+      const ativos = store.services.filter(s=> !isEncerrado(s)).length;
+
+      $("m_totalCli").innerText = String(totalClients);
+      $("m_srvAtivos").innerText = String(ativos);
+      $("m_final").innerText = String(finalizados);
+      $("m_pendCom").innerText = String(pendCom);
+      $("m_cliNotLine").innerText = `Notificados: ${clientesNotificados}`;
+
+      const ativosList = store.services.filter(s=> !isEncerrado(s));
+      const sis = ativosList.filter(s=>s.tipoResolucao==="Sistêmica").length;
+      const fis = ativosList.filter(s=>s.tipoResolucao==="Física").length;
+
+      if(chartResolucao){
+        chartResolucao.data.datasets[0].data = [sis, fis];
+        chartResolucao.update();
+      }
+
+      const etapaCounts = ETAPAS.map(et=> store.services.filter(s=>s.etapa===et).length);
+      if(chartEtapa){
+        chartEtapa.data.datasets[0].data = etapaCounts;
+        chartEtapa.update();
+      }
+
+      const top = [...store.clients]
+        .map(c=>({ c, n: countServicesByClient(c.id) }))
+        .sort((a,b)=>b.n-a.n)
+        .slice(0,10);
+
+      $("topClientsTbody").innerHTML = top.length ? top.map(({c,n})=>`
+        <tr>
+          <td>${escapeHtml(c.nomeConta||"—")}</td>
+          <td>${escapeHtml(c.cnpj||"—")}</td>
+          <td>${escapeHtml(c.segmento||"—")}</td>
+          <td>${escapeHtml(c.subgrupo||"—")}</td>
+          <td><span class="badge b-muted">${n}</span></td>
+          <td>${badgeComunicacao(c.comunicacaoStatus||"Nao_comunicado")}</td>
+        </tr>
+      `).join("") : `<tr><td colspan="6" style="color:var(--muted);font-weight:900;">Sem dados.</td></tr>`;
     }
 
     function renderClients(){
@@ -1197,34 +1110,26 @@
       const seg = $("cliSeg").value || "";
       const sub = $("cliSub").value || "";
 
-      const rows = state.clients
+      const rows = store.clients
         .map(c=>{
           const nome = normalizeText(c.nomeConta || "");
           const cnpj = (c.cnpj||"");
           const cnpjNorm = normalizeText(cnpj);
-
-          const hit = !qtxt
-            || nome.includes(qtxt)
-            || cnpjNorm.includes(qtxt)
-            || onlyDigits(cnpj).includes(onlyDigits(qtxt));
-
+          const hit = !qtxt || nome.includes(qtxt) || cnpjNorm.includes(qtxt) || onlyDigits(cnpj).includes(onlyDigits(qtxt));
           const okSeg = !seg || c.segmento===seg;
           const okSub = !sub || c.subgrupo===sub;
-
           return { c, hit: hit && okSeg && okSub };
         })
         .filter(x=>x.hit)
         .map(({c})=>{
           const nSrv = countServicesByClient(c.id);
-          const nomeConta = c.nomeConta || "—";
-          const consultor = c.consultorNome || "—";
           return `
             <tr>
-              <td><span class="link" data-open-client="${c.id}">${escapeHtml(nomeConta)}</span></td>
+              <td><span class="link" data-open-client="${c.id}">${escapeHtml(c.nomeConta||"—")}</span></td>
               <td>${escapeHtml(c.cnpj||"—")}</td>
               <td>${escapeHtml(c.segmento||"—")}</td>
               <td>${escapeHtml(c.subgrupo||"—")}</td>
-              <td>${escapeHtml(consultor)}</td>
+              <td>${escapeHtml(c.consultorNome||"—")}</td>
               <td>${badgeComunicacao(c.comunicacaoStatus||"Nao_comunicado")}</td>
               <td><span class="badge b-muted">${nSrv}</span></td>
               <td>
@@ -1242,10 +1147,7 @@
       $("cliCount").innerText = String(rows.length);
 
       document.querySelectorAll("[data-open-client]").forEach(el=>{
-        el.onclick = () => {
-          state.selectedClientId = el.getAttribute("data-open-client");
-          showView("detail");
-        };
+        el.onclick = () => { state.selectedClientId = el.getAttribute("data-open-client"); showView("detail"); };
       });
 
       document.querySelectorAll("[data-edit-client]").forEach(el=>{
@@ -1257,187 +1159,38 @@
       });
     }
 
-    async function loadContacts(clientId){
-      const snap = await getDocs(query(collection(db,"clientes",clientId,"contatos"), orderBy("createdAt","desc")));
-      return snap.docs.map(d=>({ id:d.id, ...d.data() }));
-    }
-
-    function computeClientStats(clientId){
-      const all = state.services.filter(s=>s.clientId===clientId);
-      const byEt = (et) => all.filter(s=>(s.etapa||"")===et).length;
-      return {
-        total: all.length,
-        c0: byEt("Comunicar Cliente"),
-        c1: byEt("Comunicado"),
-        c2: byEt("Em tratativa"),
-        c3: byEt("Finalizado")
-      };
-    }
-
-    function formatEndereco(c){
-      const e = c.enderecoObj || {};
-      const parts1 = [];
-      const rua = (e.rua||"").trim();
-      const numero = (e.numero||"").trim();
-      const comp = (e.complemento||"").trim();
-      if(rua) parts1.push(rua);
-      if(numero) parts1.push("nº "+numero);
-      if(comp) parts1.push(comp);
-
-      const parts2 = [];
-      const bairro = (e.bairro||"").trim();
-      const cidade = (e.cidade||"").trim();
-      const uf = (e.uf||"").trim();
-      const cep = (e.cep||"").trim();
-      if(bairro) parts2.push(bairro);
-      if(cidade) parts2.push(cidade);
-      if(uf) parts2.push(uf);
-
-      let line = parts1.join(", ");
-      let line2 = parts2.join(" • ");
-      let line3 = cep ? ("CEP: "+cep) : "";
-
-      const legacy = (c.endereco || "").trim();
-      if(!line && !line2 && !line3 && legacy) return legacy;
-      return [line, line2, line3].filter(Boolean).join(" — ");
-    }
-
-    async function renderDetail(){
-      const id = state.selectedClientId;
-      const c = state.clients.find(x=>x.id===id);
-
-      if(!c){
-        $("detailSubtitle").innerText = "Selecione um cliente na lista.";
-        $("detailCnpjBadge").innerText = "CNPJ: —";
-        $("detailKV").innerHTML = "";
-        $("detailObs").innerText = "—";
-        $("detailStatsRow").innerHTML = `
-          <span class="badge b-muted">Serviços: —</span>
-          <span class="badge b-info">Comunicar Cliente: —</span>
-          <span class="badge b-info">Comunicado: —</span>
-          <span class="badge b-info">Em tratativa: —</span>
-          <span class="badge b-ok">Finalizado: —</span>
-        `;
-        $("contactsTbody").innerHTML = `<tr><td colspan="3" style="color:var(--muted);font-weight:900;">Sem contatos cadastrados.</td></tr>`;
-        $("detailServicesTbody").innerHTML = `<tr><td colspan="6" style="color:var(--muted);font-weight:900;">Selecione um cliente.</td></tr>`;
-        return;
-      }
-
-      const nomeConta = c.nomeConta || "Cliente";
-      $("detailSubtitle").innerText = nomeConta;
-      $("detailCnpjBadge").innerText = `CNPJ: ${c.cnpj || "—"}`;
-
-      const st = computeClientStats(id);
-      $("detailStatsRow").innerHTML = `
-        <span class="badge b-muted">Serviços: ${st.total}</span>
-        <span class="badge b-info">Comunicar Cliente: ${st.c0}</span>
-        <span class="badge b-info">Comunicado: ${st.c1}</span>
-        <span class="badge b-info">Em tratativa: ${st.c2}</span>
-        <span class="badge b-ok">Finalizado: ${st.c3}</span>
-      `;
-
-      const kv = [
-        ["Nome da Conta", nomeConta],
-        ["Segmento", c.segmento],
-        ["Subgrupo", c.subgrupo],
-        ["Consultor", c.consultorNome || "—"],
-        ["Comunicação", (c.comunicacaoStatus==="Comunicado" ? "Comunicado" : "Pendente")],
-        ["Endereço", formatEndereco(c) || "—"],
-      ];
-
-      $("detailKV").innerHTML = kv.map(([k,v])=>`
-        <div class="kv">
-          <div class="k">${escapeHtml(k)}</div>
-          <div class="v">${escapeHtml(v || "—")}</div>
-        </div>
-      `).join("");
-
-      $("detailObs").innerText = c.observacoes?.trim() ? c.observacoes : "—";
-
-      const srows = state.services.filter(s=>s.clientId===id).map(s=>`
-        <tr>
-          <td>${escapeHtml(s.tipoServico||"—")}</td>
-          <td>${escapeHtml(s.placaAtivo||"—")}</td>
-          <td>${s.emDescontinuacao ? `<span class="badge b-warn"><i class="fa-solid fa-triangle-exclamation"></i> Sim</span>` : `<span class="badge b-muted">Não</span>`}</td>
-          <td>${escapeHtml(s.tipoResolucao||"—")}</td>
-          <td>${escapeHtml(s.etapa||"—")}</td>
-          <td>${badgeResultado(s.resultadoFinal||"Em andamento")}</td>
-        </tr>
-      `);
-
-      $("detailServicesTbody").innerHTML = srows.length
-        ? srows.join("")
-        : `<tr><td colspan="6" style="color:var(--muted);font-weight:900;">Nenhum serviço vinculado.</td></tr>`;
-
-      const contacts = await loadContacts(id);
-      if(!contacts.length){
-        $("contactsTbody").innerHTML = `<tr><td colspan="3" style="color:var(--muted);font-weight:900;">Sem contatos cadastrados.</td></tr>`;
-      } else {
-        $("contactsTbody").innerHTML = contacts.map(ct=>`
-          <tr>
-            <td>${escapeHtml(ct.nome||"—")}</td>
-            <td>${escapeHtml(ct.valor||"—")}</td>
-            <td>
-              <button class="btn ghost" data-edit-contact="${ct.id}"><i class="fa-solid fa-pen"></i></button>
-              <button class="btn danger" data-del-contact="${ct.id}"><i class="fa-solid fa-trash"></i></button>
-            </td>
-          </tr>
-        `).join("");
-
-        document.querySelectorAll("[data-edit-contact]").forEach(el=>{
-          el.onclick = () => editContact(id, el.getAttribute("data-edit-contact"), contacts.find(c=>c.id===el.getAttribute("data-edit-contact")));
-        });
-        document.querySelectorAll("[data-del-contact]").forEach(el=>{
-          el.onclick = () => delContact(id, el.getAttribute("data-del-contact"));
-        });
-      }
-    }
-
     function renderServices(){
       const qtxt = normalizeText($("srvSearch").value || "");
       const et = $("srvEtapa").value || "";
       const res = $("srvResultado").value || "";
       const tipo = $("srvTipo").value || "";
 
-      const rows = state.services
+      const rows = store.services
         .map(s=>{
-          const c = state.clients.find(x=>x.id===s.clientId) || {};
-          const nome = (c.nomeConta || "");
-          const text = normalizeText([
-            nome,
-            c.cnpj,
-            s.tipoServico,
-            s.placaAtivo,
-            s.etapa,
-            s.resultadoFinal
-          ].join(" "));
-
+          const c = store.clients.find(x=>x.id===s.clientId) || {};
+          const text = normalizeText([c.nomeConta, c.cnpj, s.tipoServico, s.placaAtivo, s.etapa, s.resultadoFinal].join(" "));
           const hit = !qtxt || text.includes(qtxt) || onlyDigits(text).includes(onlyDigits(qtxt));
           const okEt = !et || s.etapa===et;
           const okRes = !res || s.resultadoFinal===res;
           const okTipo = !tipo || s.tipoServico===tipo;
-
           return { s, c, hit: hit && okEt && okRes && okTipo };
         })
         .filter(x=>x.hit)
-        .map(({s,c})=>{
-          const nomeConta = c.nomeConta || "—";
-          return `
-            <tr>
-              <td><span class="link" data-open-client="${s.clientId}">${escapeHtml(nomeConta)}</span></td>
-              <td>${escapeHtml(c.cnpj||"—")}</td>
-              <td>${escapeHtml(s.tipoServico||"—")}</td>
-              <td>${escapeHtml(s.placaAtivo||"—")}</td>
-              <td>${escapeHtml(s.tipoResolucao||"—")}</td>
-              <td>${escapeHtml(s.etapa||"—")}</td>
-              <td>${badgeResultado(s.resultadoFinal||"Em andamento")}</td>
-              <td>
-                <button class="btn ghost" data-edit-srv="${s.id}"><i class="fa-solid fa-pen"></i> Editar</button>
-                <button class="btn danger" data-del-srv="${s.id}"><i class="fa-solid fa-trash"></i> Excluir</button>
-              </td>
-            </tr>
-          `;
-        });
+        .map(({s,c})=>`
+          <tr>
+            <td><span class="link" data-open-client="${s.clientId}">${escapeHtml(c.nomeConta||"—")}</span></td>
+            <td>${escapeHtml(c.cnpj||"—")}</td>
+            <td>${escapeHtml(s.tipoServico||"—")}</td>
+            <td>${escapeHtml(s.placaAtivo||"—")}</td>
+            <td>${escapeHtml(s.tipoResolucao||"—")}</td>
+            <td>${escapeHtml(s.etapa||"—")}</td>
+            <td>${badgeResultado(s.resultadoFinal||"Em andamento")}</td>
+            <td>
+              <button class="btn ghost" data-edit-srv="${s.id}"><i class="fa-solid fa-pen"></i> Editar</button>
+              <button class="btn danger" data-del-srv="${s.id}"><i class="fa-solid fa-trash"></i> Excluir</button>
+            </td>
+          </tr>
+        `);
 
       $("servicesTbody").innerHTML = rows.length
         ? rows.join("")
@@ -1446,19 +1199,10 @@
       $("srvCount").innerText = String(rows.length);
 
       document.querySelectorAll("[data-open-client]").forEach(el=>{
-        el.onclick = () => {
-          state.selectedClientId = el.getAttribute("data-open-client");
-          showView("detail");
-        };
+        el.onclick = () => { state.selectedClientId = el.getAttribute("data-open-client"); showView("detail"); };
       });
-
-      document.querySelectorAll("[data-edit-srv]").forEach(el=>{
-        el.onclick = () => editService(el.getAttribute("data-edit-srv"));
-      });
-
-      document.querySelectorAll("[data-del-srv]").forEach(el=>{
-        el.onclick = () => delService(el.getAttribute("data-del-srv"));
-      });
+      document.querySelectorAll("[data-edit-srv]").forEach(el=> el.onclick = ()=> editService(el.getAttribute("data-edit-srv")));
+      document.querySelectorAll("[data-del-srv]").forEach(el=> el.onclick = ()=> delService(el.getAttribute("data-del-srv")));
     }
 
     function renderConsultants(){
@@ -1466,7 +1210,7 @@
       const seg = $("conSeg").value || "";
       const sub = $("conSub").value || "";
 
-      const rows = state.consultants
+      const rows = store.consultants
         .filter(c=>{
           const hit = !qtxt || normalizeText(c.nome||"").includes(qtxt) || normalizeText(c.email||"").includes(qtxt);
           const okSeg = !seg || c.segmento===seg;
@@ -1492,16 +1236,12 @@
 
       $("conCount").innerText = String(rows.length);
 
-      document.querySelectorAll("[data-edit-con]").forEach(el=>{
-        el.onclick = () => editConsultant(el.getAttribute("data-edit-con"));
-      });
-      document.querySelectorAll("[data-del-con]").forEach(el=>{
-        el.onclick = () => delConsultant(el.getAttribute("data-del-con"));
-      });
+      document.querySelectorAll("[data-edit-con]").forEach(el=> el.onclick = ()=> editConsultant(el.getAttribute("data-edit-con")));
+      document.querySelectorAll("[data-del-con]").forEach(el=> el.onclick = ()=> delConsultant(el.getAttribute("data-del-con")));
     }
 
     function renderUsers(){
-      const rows = state.users.map(u=>`
+      const rows = store.users.map(u=>`
         <tr>
           <td>${escapeHtml(u.name||"—")}</td>
           <td>${escapeHtml(u.email||"—")}</td>
@@ -1515,101 +1255,106 @@
         ? rows.join("")
         : `<tr><td colspan="5" style="color:var(--muted);font-weight:900;">Nenhum usuário cadastrado.</td></tr>`;
 
-      document.querySelectorAll("[data-edit-user]").forEach(el=>{
-        el.onclick = () => editUser(el.getAttribute("data-edit-user"));
+      document.querySelectorAll("[data-edit-user]").forEach(el=> el.onclick = ()=> editUser(el.getAttribute("data-edit-user")));
+    }
+
+    function renderDetail(){
+      const id = state.selectedClientId;
+      const c = store.clients.find(x=>x.id===id);
+
+      if(!c){
+        $("detailSubtitle").innerText = "Selecione um cliente na lista.";
+        $("detailCnpjBadge").innerText = "CNPJ: —";
+        $("detailKV").innerHTML = "";
+        $("detailObs").innerText = "—";
+        $("detailStatsRow").innerHTML = `
+          <span class="badge b-muted">Serviços: —</span>
+          <span class="badge b-info">Comunicar Cliente: —</span>
+          <span class="badge b-info">Comunicado: —</span>
+          <span class="badge b-info">Em tratativa: —</span>
+          <span class="badge b-ok">Finalizado: —</span>
+        `;
+        $("contactsTbody").innerHTML = `<tr><td colspan="3" style="color:var(--muted);font-weight:900;">Sem contatos cadastrados.</td></tr>`;
+        $("detailServicesTbody").innerHTML = `<tr><td colspan="6" style="color:var(--muted);font-weight:900;">Selecione um cliente.</td></tr>`;
+        return;
+      }
+
+      $("detailSubtitle").innerText = c.nomeConta || "Cliente";
+      $("detailCnpjBadge").innerText = `CNPJ: ${c.cnpj || "—"}`;
+
+      const st = computeClientStats(id);
+      $("detailStatsRow").innerHTML = `
+        <span class="badge b-muted">Serviços: ${st.total}</span>
+        <span class="badge b-info">Comunicar Cliente: ${st.c0}</span>
+        <span class="badge b-info">Comunicado: ${st.c1}</span>
+        <span class="badge b-info">Em tratativa: ${st.c2}</span>
+        <span class="badge b-ok">Finalizado: ${st.c3}</span>
+      `;
+
+      const kv = [
+        ["Nome da Conta", c.nomeConta],
+        ["Segmento", c.segmento],
+        ["Subgrupo", c.subgrupo],
+        ["Consultor", c.consultorNome || "—"],
+        ["Comunicação", (c.comunicacaoStatus==="Comunicado" ? "Comunicado" : "Pendente")]
+      ];
+      $("detailKV").innerHTML = kv.map(([k,v])=>`
+        <div class="kv"><div class="k">${escapeHtml(k)}</div><div class="v">${escapeHtml(v || "—")}</div></div>
+      `).join("");
+
+      $("detailObs").innerText = c.observacoes?.trim() ? c.observacoes : "—";
+
+      const srows = store.services.filter(s=>s.clientId===id).map(s=>`
+        <tr>
+          <td>${escapeHtml(s.tipoServico||"—")}</td>
+          <td>${escapeHtml(s.placaAtivo||"—")}</td>
+          <td>${s.emDescontinuacao ? `<span class="badge b-warn"><i class="fa-solid fa-triangle-exclamation"></i> Sim</span>` : `<span class="badge b-muted">Não</span>`}</td>
+          <td>${escapeHtml(s.tipoResolucao||"—")}</td>
+          <td>${escapeHtml(s.etapa||"—")}</td>
+          <td>${badgeResultado(s.resultadoFinal||"Em andamento")}</td>
+        </tr>
+      `);
+      $("detailServicesTbody").innerHTML = srows.length ? srows.join("") : `<tr><td colspan="6" style="color:var(--muted);font-weight:900;">Nenhum serviço vinculado.</td></tr>`;
+
+      const contacts = (c.contatos || []);
+      $("contactsTbody").innerHTML = contacts.length ? contacts.map(ct=>`
+        <tr>
+          <td>${escapeHtml(ct.nome||"—")}</td>
+          <td>${escapeHtml(ct.valor||"—")}</td>
+          <td>
+            <button class="btn ghost" data-edit-contact="${ct.id}"><i class="fa-solid fa-pen"></i></button>
+            <button class="btn danger" data-del-contact="${ct.id}"><i class="fa-solid fa-trash"></i></button>
+          </td>
+        </tr>
+      `).join("") : `<tr><td colspan="3" style="color:var(--muted);font-weight:900;">Sem contatos cadastrados.</td></tr>`;
+
+      document.querySelectorAll("[data-edit-contact]").forEach(el=>{
+        const cid = el.getAttribute("data-edit-contact");
+        el.onclick = ()=> editContact(id, cid);
+      });
+      document.querySelectorAll("[data-del-contact]").forEach(el=>{
+        const cid = el.getAttribute("data-del-contact");
+        el.onclick = ()=> delContact(id, cid);
       });
     }
 
-    function refreshDashboard(){
-      const totalClients = state.clients.length;
-
-      const clientesNotificados = state.clients.filter(c=>c.comunicacaoStatus==="Comunicado").length;
-      const pendCom = Math.max(0, totalClients - clientesNotificados);
-
-      const finalizados = state.services.filter(s=> isEncerrado(s)).length;
-      const ativos = state.services.filter(s=> !isEncerrado(s)).length;
-
-      $("m_totalCli").innerText = String(totalClients);
-      $("m_srvAtivos").innerText = String(ativos);
-      $("m_final").innerText = String(finalizados);
-      $("m_pendCom").innerText = String(pendCom);
-      $("m_cliNotLine").innerText = `Notificados: ${clientesNotificados}`;
-
-      const ativosList = state.services.filter(s=> !isEncerrado(s));
-      const sis = ativosList.filter(s=>s.tipoResolucao==="Sistêmica").length;
-      const fis = ativosList.filter(s=>s.tipoResolucao==="Física").length;
-
-      if(chartResolucao){
-        chartResolucao.data.datasets[0].data = [sis, fis];
-        chartResolucao.update();
-      }
-
-      const etapaCounts = ETAPAS.map(et=> state.services.filter(s=>s.etapa===et).length);
-      if(chartEtapa){
-        chartEtapa.data.datasets[0].data = etapaCounts;
-        chartEtapa.update();
-      }
-
-      const top = [...state.clients]
-        .map(c=>({ c, n: countServicesByClient(c.id) }))
-        .sort((a,b)=>b.n-a.n)
-        .slice(0,10);
-
-      $("topClientsTbody").innerHTML = top.length ? top.map(({c,n})=>{
-        const nomeConta = c.nomeConta || "—";
-        return `
-          <tr>
-            <td>${escapeHtml(nomeConta)}</td>
-            <td>${escapeHtml(c.cnpj||"—")}</td>
-            <td>${escapeHtml(c.segmento||"—")}</td>
-            <td>${escapeHtml(c.subgrupo||"—")}</td>
-            <td><span class="badge b-muted">${n}</span></td>
-            <td>${badgeComunicacao(c.comunicacaoStatus||"Nao_comunicado")}</td>
-          </tr>
-        `;
-      }).join("") : `<tr><td colspan="6" style="color:var(--muted);font-weight:900;">Sem dados.</td></tr>`;
-    }
-
-    // ✅ SINCRONIZAÇÃO: se cliente virar "Comunicado", atualiza serviços (exceto Finalizado)
-    async function syncClientComunicadoToServices(clientId){
-      const list = state.services.filter(s=>s.clientId===clientId);
-      const pend = list.filter(s=>(s.etapa||"") !== "Finalizado"); // mantém integridade
-      if(!pend.length) return;
-
-      // atualiza em lote (com limite seguro)
-      const tasks = pend.map(srv =>
-        updateDoc(doc(db,"servicos",srv.id), { etapa: "Comunicado", updatedAt: serverTimestamp() })
-      );
-
-      await Promise.all(tasks);
-    }
-
-    function clientForm({data}){
+    // -------------------------
+    // Forms (Clientes/Serviços/Consultores/Acessos)
+    // -------------------------
+    function clientForm(data={}){
       const c = data || {};
       const segOptions = SEGMENTOS.map(s=>`<option ${c.segmento===s?"selected":""}>${s}</option>`).join("");
       const subOptions = SUBGRUPOS.map(s=>`<option ${c.subgrupo===s?"selected":""}>${s}</option>`).join("");
-
-      const e = c.enderecoObj || {};
-      const cep = escapeHtml(e.cep||"");
-      const rua = escapeHtml(e.rua||"");
-      const numero = escapeHtml(e.numero||"");
-      const complemento = escapeHtml(e.complemento||"");
-      const bairro = escapeHtml(e.bairro||"");
-      const cidade = escapeHtml(e.cidade||"");
-      const uf = escapeHtml(e.uf||"");
-
       return `
         <div class="formGrid2">
           <div class="field" style="grid-column:1/-1;">
             <label>Nome da Conta</label>
-            <input class="input" id="f_conta" value="${escapeHtml(c.nomeConta||"")}" placeholder="Ex.: BEZERRA &amp; OLIVEIRA COMÉRCIO..." />
+            <input class="input" id="f_conta" value="${escapeHtml(c.nomeConta||"")}" placeholder="Ex.: Empresa..." />
           </div>
-
           <div class="field">
-            <label>CNPJ (digite só números)</label>
+            <label>CNPJ</label>
             <input class="input" id="f_cnpj" value="${escapeHtml(c.cnpj||"")}" placeholder="00.000.000/0000-00"/>
           </div>
-
           <div class="field">
             <label>Comunicação</label>
             <select class="select" id="f_com">
@@ -1617,393 +1362,54 @@
               <option value="Comunicado" ${(c.comunicacaoStatus||"Nao_comunicado")==="Comunicado"?"selected":""}>Comunicado</option>
             </select>
           </div>
-
           <div class="field">
             <label>Segmento</label>
-            <select class="select" id="f_seg">
-              <option value="">Selecione...</option>
-              ${segOptions}
-            </select>
+            <select class="select" id="f_seg"><option value="">Selecione...</option>${segOptions}</select>
           </div>
-
           <div class="field">
             <label>Subgrupo</label>
-            <select class="select" id="f_sub">
-              <option value="">Selecione...</option>
-              ${subOptions}
-            </select>
+            <select class="select" id="f_sub"><option value="">Selecione...</option>${subOptions}</select>
           </div>
-
           <div class="field" style="grid-column:1/-1;">
-            <label>Consultor (filtrado por Segmento/Subgrupo)</label>
-            <select class="select" id="f_consultor">
-              <option value="">Selecione...</option>
-            </select>
+            <label>Consultor (texto)</label>
+            <input class="input" id="f_cons" value="${escapeHtml(c.consultorNome||"")}" placeholder="Ex.: Nome do consultor"/>
           </div>
-
-          <div class="field">
-            <label>CEP</label>
-            <input class="input" id="f_cep" value="${cep}" placeholder="00000-000"/>
-          </div>
-          <div class="field">
-            <label>UF</label>
-            <input class="input" id="f_uf" value="${uf}" placeholder="PR" maxlength="2"/>
-          </div>
-
-          <div class="field" style="grid-column:1/-1;">
-            <label>Rua / Logradouro</label>
-            <input class="input" id="f_rua" value="${rua}" placeholder="Rua, Avenida..." />
-          </div>
-
-          <div class="field">
-            <label>Número</label>
-            <input class="input" id="f_num" value="${numero}" placeholder="123" />
-          </div>
-
-          <div class="field">
-            <label>Complemento</label>
-            <input class="input" id="f_comp" value="${complemento}" placeholder="Sala, conjunto..." />
-          </div>
-
-          <div class="field">
-            <label>Bairro</label>
-            <input class="input" id="f_bairro" value="${bairro}" placeholder="Centro" />
-          </div>
-
-          <div class="field">
-            <label>Cidade</label>
-            <input class="input" id="f_cidade" value="${cidade}" placeholder="Curitiba" />
-          </div>
-
           <div class="field" style="grid-column:1/-1;">
             <label>Observações</label>
-            <textarea class="textarea" id="f_obs" placeholder="Observações internas...">${escapeHtml(c.observacoes||"")}</textarea>
+            <textarea class="textarea" id="f_obs" placeholder="Observações...">${escapeHtml(c.observacoes||"")}</textarea>
           </div>
         </div>
       `;
     }
 
-    function fillConsultorSelect(seg, sub, selectedId=""){
-      const sel = $("f_consultor");
-      if(!sel) return;
-
-      const list = state.consultants.filter(c=>{
-        if(seg && c.segmento!==seg) return false;
-        if(sub && c.subgrupo!==sub) return false;
-        return true;
-      });
-
-      sel.innerHTML = `<option value="">Selecione...</option>` + list.map(c=>`
-        <option value="${c.id}" ${selectedId===c.id?"selected":""}>${escapeHtml(c.nome)} • ${escapeHtml(c.email||"")}</option>
-      `).join("");
-    }
-
-    async function newClient(){
-      if(!can("write")) return toast("Sem permissão para criar/editar.", "err");
-
-      openModal({
-        title:"Novo Cliente",
-        sub:"Preencha os dados do cliente.",
-        bodyHtml: clientForm({}),
-        footerHtml: `
-          <button class="btn ghost" id="mCancel">Cancelar</button>
-          <button class="btn primary" id="mSave"><i class="fa-solid fa-floppy-disk"></i> Salvar</button>
-        `
-      });
-
-      const cnpjEl = $("f_cnpj");
-      cnpjEl.addEventListener("input", ()=>{ cnpjEl.value = formatCNPJ(cnpjEl.value); });
-
-      const segEl = $("f_seg");
-      const subEl = $("f_sub");
-      const conEl = $("f_consultor");
-      const updateCons = ()=> fillConsultorSelect(segEl.value, subEl.value, conEl.value);
-      segEl.onchange = updateCons;
-      subEl.onchange = updateCons;
-      updateCons();
-
-      $("mCancel").onclick = closeModal;
-      $("mSave").onclick = async ()=>{
-        try{
-          const conta = $("f_conta").value.trim();
-          const cnpj = formatCNPJ($("f_cnpj").value.trim());
-          const comunicacaoStatus = $("f_com").value;
-          const segmento = $("f_seg").value;
-          const subgrupo = $("f_sub").value;
-          const consultorId = $("f_consultor").value || "";
-          const consultor = state.consultants.find(x=>x.id===consultorId) || null;
-
-          const enderecoObj = {
-            cep: $("f_cep").value.trim(),
-            uf: ($("f_uf").value||"").trim().toUpperCase(),
-            rua: $("f_rua").value.trim(),
-            numero: $("f_num").value.trim(),
-            complemento: $("f_comp").value.trim(),
-            bairro: $("f_bairro").value.trim(),
-            cidade: $("f_cidade").value.trim()
-          };
-
-          const endereco = formatEndereco({enderecoObj});
-          const observacoes = $("f_obs").value.trim();
-
-          if(!conta) return toast("Preencha Nome da Conta.", "err");
-          if(!segmento || !subgrupo) return toast("Selecione Segmento e Subgrupo.", "err");
-
-          await addDoc(collection(db,"clientes"), {
-            nomeConta: conta,
-            cnpj,
-            comunicacaoStatus,
-            segmento,
-            subgrupo,
-            consultorId,
-            consultorNome: consultor?.nome || "",
-            consultorEmail: consultor?.email || "",
-            enderecoObj,
-            endereco,
-            observacoes,
-            createdAt: serverTimestamp(),
-            updatedAt: serverTimestamp()
-          });
-
-          closeModal();
-          toast("Cliente salvo com sucesso.");
-        }catch(e){
-          toast("Erro ao salvar cliente: " + e.message, "err");
-        }
-      };
-    }
-
-    async function editClient(id){
-      if(!can("write")) return toast("Sem permissão para editar.", "err");
-      const c = state.clients.find(x=>x.id===id);
-      if(!c) return;
-
-      const oldCom = c.comunicacaoStatus || "Nao_comunicado";
-
-      openModal({
-        title:"Editar Cliente",
-        sub:"Atualize dados do cliente.",
-        bodyHtml: clientForm({data:c}),
-        footerHtml: `
-          <button class="btn ghost" id="mCancel">Cancelar</button>
-          <button class="btn primary" id="mSave"><i class="fa-solid fa-floppy-disk"></i> Salvar</button>
-        `
-      });
-
-      const cnpjEl = $("f_cnpj");
-      cnpjEl.addEventListener("input", ()=>{ cnpjEl.value = formatCNPJ(cnpjEl.value); });
-
-      const segEl = $("f_seg");
-      const subEl = $("f_sub");
-      const updateCons = ()=> fillConsultorSelect(segEl.value, subEl.value, c.consultorId || "");
-      segEl.onchange = updateCons;
-      subEl.onchange = updateCons;
-      updateCons();
-
-      $("mCancel").onclick = closeModal;
-      $("mSave").onclick = async ()=>{
-        try{
-          const conta = $("f_conta").value.trim();
-          const cnpj = formatCNPJ($("f_cnpj").value.trim());
-          const comunicacaoStatus = $("f_com").value;
-          const segmento = $("f_seg").value;
-          const subgrupo = $("f_sub").value;
-          const consultorId = $("f_consultor").value || "";
-          const consultor = state.consultants.find(x=>x.id===consultorId) || null;
-
-          const enderecoObj = {
-            cep: $("f_cep").value.trim(),
-            uf: ($("f_uf").value||"").trim().toUpperCase(),
-            rua: $("f_rua").value.trim(),
-            numero: $("f_num").value.trim(),
-            complemento: $("f_comp").value.trim(),
-            bairro: $("f_bairro").value.trim(),
-            cidade: $("f_cidade").value.trim()
-          };
-
-          const endereco = formatEndereco({enderecoObj});
-          const observacoes = $("f_obs").value.trim();
-
-          if(!conta) return toast("Preencha Nome da Conta.", "err");
-          if(!segmento || !subgrupo) return toast("Selecione Segmento e Subgrupo.", "err");
-
-          await updateDoc(doc(db,"clientes",id), {
-            nomeConta: conta,
-            cnpj,
-            comunicacaoStatus,
-            segmento,
-            subgrupo,
-            consultorId,
-            consultorNome: consultor?.nome || "",
-            consultorEmail: consultor?.email || "",
-            enderecoObj,
-            endereco,
-            observacoes,
-            updatedAt: serverTimestamp()
-          });
-
-          // ✅ Se virou "Comunicado" agora, sincroniza serviços (exceto Finalizado)
-          if(oldCom !== "Comunicado" && comunicacaoStatus === "Comunicado"){
-            await syncClientComunicadoToServices(id);
-            toast("Cliente comunicado. Serviços vinculados atualizados (exceto finalizados).");
-          }else{
-            toast("Cliente atualizado.");
-          }
-
-          closeModal();
-          if(state.selectedClientId===id) renderDetail();
-        }catch(e){
-          toast("Erro ao atualizar cliente: " + e.message, "err");
-        }
-      };
-    }
-
-    async function delClient(id){
-      if(!can("admin")) return toast("Somente admin pode excluir.", "err");
-      if(!confirm("Excluir este cliente?")) return;
-      try{
-        await deleteDoc(doc(db,"clientes",id));
-        if(state.selectedClientId===id) state.selectedClientId=null;
-        toast("Cliente excluído.");
-      }catch(e){
-        toast("Erro ao excluir cliente: " + e.message, "err");
-      }
-    }
-
-    function contactForm(ct={}){
-      return `
-        <div class="formGrid2">
-          <div class="field">
-            <label>Nome do contato</label>
-            <input class="input" id="ct_nome" value="${escapeHtml(ct.nome||"")}" placeholder="Ex.: Camila Aparecida"/>
-          </div>
-          <div class="field">
-            <label>Contato (e-mail ou telefone)</label>
-            <input class="input" id="ct_val" value="${escapeHtml(ct.valor||"")}" placeholder="Ex.: camila@empresa.com / (41) 99999-9999"/>
-          </div>
-        </div>
-      `;
-    }
-
-    async function addContact(){
-      if(!can("write")) return toast("Sem permissão para editar.", "err");
-      const clientId = state.selectedClientId;
-      if(!clientId) return toast("Selecione um cliente.", "err");
-
-      openModal({
-        title:"Adicionar Contato",
-        sub:"Cadastre um e-mail ou telefone.",
-        bodyHtml: contactForm(),
-        footerHtml: `
-          <button class="btn ghost" id="mCancel">Cancelar</button>
-          <button class="btn primary" id="mSave"><i class="fa-solid fa-floppy-disk"></i> Salvar</button>
-        `
-      });
-
-      $("mCancel").onclick = closeModal;
-      $("mSave").onclick = async ()=>{
-        const nome = $("ct_nome").value.trim();
-        const valor = $("ct_val").value.trim();
-        if(!nome || !valor) return toast("Preencha nome e contato.", "err");
-
-        try{
-          await addDoc(collection(db,"clientes",clientId,"contatos"), {
-            nome, valor,
-            createdAt: serverTimestamp(),
-            updatedAt: serverTimestamp()
-          });
-
-          closeModal();
-          toast("Contato salvo.");
-          renderDetail();
-        }catch(e){
-          toast("Erro ao salvar contato: " + e.message, "err");
-        }
-      };
-    }
-
-    function editContact(clientId, contactId, ct){
-      if(!can("write")) return toast("Sem permissão para editar.", "err");
-
-      openModal({
-        title:"Editar Contato",
-        sub:"Atualize dados do contato.",
-        bodyHtml: contactForm(ct),
-        footerHtml: `
-          <button class="btn ghost" id="mCancel">Cancelar</button>
-          <button class="btn primary" id="mSave"><i class="fa-solid fa-floppy-disk"></i> Salvar</button>
-        `
-      });
-
-      $("mCancel").onclick = closeModal;
-      $("mSave").onclick = async ()=>{
-        const nome = $("ct_nome").value.trim();
-        const valor = $("ct_val").value.trim();
-        if(!nome || !valor) return toast("Preencha nome e contato.", "err");
-
-        try{
-          await updateDoc(doc(db,"clientes",clientId,"contatos",contactId), {
-            nome, valor, updatedAt: serverTimestamp()
-          });
-
-          closeModal();
-          toast("Contato atualizado.");
-          renderDetail();
-        }catch(e){
-          toast("Erro ao atualizar contato: " + e.message, "err");
-        }
-      };
-    }
-
-    async function delContact(clientId, contactId){
-      if(!can("write")) return toast("Sem permissão.", "err");
-      if(!confirm("Excluir este contato?")) return;
-      try{
-        await deleteDoc(doc(db,"clientes",clientId,"contatos",contactId));
-        toast("Contato excluído.");
-        renderDetail();
-      }catch(e){
-        toast("Erro ao excluir contato: " + e.message, "err");
-      }
-    }
-
-    function serviceForm({data}){
+    function serviceForm(data={}){
       const s = data || {};
+      const clientOptions = [...store.clients].sort((a,b)=>normalizeText(a.nomeConta||"").localeCompare(normalizeText(b.nomeConta||""))).map(c=>{
+        const label = `${c.nomeConta||"—"} • ${c.cnpj||"—"} • ${c.segmento||"—"} • ${c.subgrupo||"—"}`;
+        return `<option value="${escapeHtml(label)}" data-id="${c.id}"></option>`;
+      }).join("");
 
-      const clientOptions = state.clients
-        .map(c=>{
-          const nomeConta = c.nomeConta || "—";
-          const label = `${nomeConta} • ${c.cnpj||"—"} • ${c.segmento||"—"} • ${c.subgrupo||"—"}`;
-          return { id:c.id, label };
-        })
-        .sort((a,b)=> normalizeText(a.label).localeCompare(normalizeText(b.label)));
-
-      const servList = [...SERVICOS].sort((a,b)=> normalizeText(a).localeCompare(normalizeText(b)));
-
+      const servList = [...SERVICOS].sort((a,b)=>normalizeText(a).localeCompare(normalizeText(b)));
       const resOpts = RESOLUCOES.map(x=>`<option ${s.tipoResolucao===x?"selected":""}>${x}</option>`).join("");
       const etapaOpts = ETAPAS.map(x=>`<option ${s.etapa===x?"selected":""}>${x}</option>`).join("");
       const resultOpts = RESULTADOS.map(x=>`<option ${s.resultadoFinal===x?"selected":""}>${x}</option>`).join("");
 
-      const currentClientName = (state.clients.find(c=>c.id===s.clientId)?.nomeConta) || "";
+      const currentClientName = (store.clients.find(c=>c.id===s.clientId)?.nomeConta) || "";
 
       return `
         <div class="formGrid2">
           <div class="field" style="grid-column:1/-1;">
             <label>Cliente (digite para buscar)</label>
             <input class="input" id="s_clientSearch" list="dl_clients" placeholder="Digite o nome da conta..." value="${escapeHtml(currentClientName)}">
-            <datalist id="dl_clients">
-              ${clientOptions.map(x=>`<option value="${escapeHtml(x.label)}" data-id="${x.id}"></option>`).join("")}
-            </datalist>
+            <datalist id="dl_clients">${clientOptions}</datalist>
             <input type="hidden" id="s_clientId" value="${escapeHtml(s.clientId||"")}">
             <div style="margin-top:6px;color:var(--muted);font-size:12px;font-weight:800;">Selecione um item da lista.</div>
           </div>
 
           <div class="field">
-            <label>Tipo de Serviço (digite para buscar)</label>
+            <label>Tipo de Serviço</label>
             <input class="input" id="s_tipoTxt" list="dl_serv" placeholder="Digite o serviço..." value="${escapeHtml(s.tipoServico||"")}">
-            <datalist id="dl_serv">
-              ${servList.map(x=>`<option value="${escapeHtml(x)}"></option>`).join("")}
-            </datalist>
+            <datalist id="dl_serv">${servList.map(x=>`<option value="${escapeHtml(x)}"></option>`).join("")}</datalist>
           </div>
 
           <div class="field">
@@ -2055,10 +1461,8 @@
         const vn = normalizeText(v);
         const exact = options.find(o=> normalizeText(o.value) === vn);
         if(exact){ hidden.value = exact.id; return; }
-
         const partial = options.find(o=> normalizeText(o.value).includes(vn) && vn.length>=3);
         if(partial){ hidden.value = partial.id; return; }
-
         hidden.value = "";
       }
 
@@ -2067,673 +1471,471 @@
       resolveId();
     }
 
-    async function newService(){
-      if(!can("write")) return toast("Sem permissão para criar/editar.", "err");
-
-      openModal({
-        title:"Novo Serviço",
-        sub:"Vincule ao cliente e defina status/etapa.",
-        bodyHtml: serviceForm({}),
-        footerHtml: `
-          <button class="btn ghost" id="mCancel">Cancelar</button>
-          <button class="btn primary" id="mSave"><i class="fa-solid fa-floppy-disk"></i> Salvar</button>
-        `
-      });
-
-      bindClientSearchToId();
-
-      $("mCancel").onclick = closeModal;
-      $("mSave").onclick = async ()=>{
-        const clientId = $("s_clientId").value;
-        if(!clientId) return toast("Selecione um cliente válido.", "err");
-
-        const tipoServico = $("s_tipoTxt").value.trim();
-        if(!tipoServico) return toast("Informe o tipo de serviço.", "err");
-
-        const payload = {
-          clientId,
-          tipoServico,
-          placaAtivo: $("s_placa").value.trim(),
-          emDescontinuacao: $("s_des").value === "true",
-          tipoResolucao: $("s_res").value,
-          etapa: $("s_et").value,
-          resultadoFinal: $("s_rf").value,
-          observacoes: $("s_obs").value.trim(),
-          createdAt: serverTimestamp(),
-          updatedAt: serverTimestamp()
-        };
-
-        try{
-          await addDoc(collection(db,"servicos"), payload);
-          closeModal();
-          toast("Serviço salvo.");
-        }catch(e){
-          toast("Erro ao salvar serviço: " + e.message, "err");
-        }
-      };
-    }
-
-    async function editService(id){
-      if(!can("write")) return toast("Sem permissão.", "err");
-      const s = state.services.find(x=>x.id===id);
-      if(!s) return;
-
-      openModal({
-        title:"Editar Serviço",
-        sub:"Atualize os dados do serviço.",
-        bodyHtml: serviceForm({data:s}),
-        footerHtml: `
-          <button class="btn ghost" id="mCancel">Cancelar</button>
-          <button class="btn primary" id="mSave"><i class="fa-solid fa-floppy-disk"></i> Salvar</button>
-        `
-      });
-
-      bindClientSearchToId();
-
-      $("mCancel").onclick = closeModal;
-      $("mSave").onclick = async ()=>{
-        const clientId = $("s_clientId").value;
-        if(!clientId) return toast("Selecione um cliente válido.", "err");
-
-        const tipoServico = $("s_tipoTxt").value.trim();
-        if(!tipoServico) return toast("Informe o tipo de serviço.", "err");
-
-        const payload = {
-          clientId,
-          tipoServico,
-          placaAtivo: $("s_placa").value.trim(),
-          emDescontinuacao: $("s_des").value === "true",
-          tipoResolucao: $("s_res").value,
-          etapa: $("s_et").value,
-          resultadoFinal: $("s_rf").value,
-          observacoes: $("s_obs").value.trim(),
-          updatedAt: serverTimestamp()
-        };
-
-        try{
-          await updateDoc(doc(db,"servicos",id), payload);
-          closeModal();
-          toast("Serviço atualizado.");
-        }catch(e){
-          toast("Erro ao atualizar serviço: " + e.message, "err");
-        }
-      };
-    }
-
-    async function delService(id){
-      if(!can("admin")) return toast("Somente admin pode excluir.", "err");
-      if(!confirm("Excluir este serviço?")) return;
-      try{
-        await deleteDoc(doc(db,"servicos",id));
-        toast("Serviço excluído.");
-      }catch(e){
-        toast("Erro ao excluir serviço: " + e.message, "err");
-      }
-    }
-
-    function consultantForm({data}){
+    function consultantForm(data={}){
       const c = data || {};
       const segOptions = SEGMENTOS.map(s=>`<option ${c.segmento===s?"selected":""}>${s}</option>`).join("");
       const subOptions = SUBGRUPOS.map(s=>`<option ${c.subgrupo===s?"selected":""}>${s}</option>`).join("");
-
       return `
         <div class="formGrid2">
-          <div class="field">
-            <label>Nome</label>
-            <input class="input" id="co_nome" value="${escapeHtml(c.nome||"")}" placeholder="Ex.: Fernanda Ferreira"/>
-          </div>
-          <div class="field">
-            <label>E-mail</label>
-            <input class="input" id="co_email" value="${escapeHtml(c.email||"")}" placeholder="Ex.: fernanda@empresa.com"/>
-          </div>
-          <div class="field">
-            <label>Segmento</label>
-            <select class="select" id="co_seg">
-              <option value="">Selecione...</option>
-              ${segOptions}
-            </select>
-          </div>
-          <div class="field">
-            <label>Subgrupo</label>
-            <select class="select" id="co_sub">
-              <option value="">Selecione...</option>
-              ${subOptions}
-            </select>
-          </div>
+          <div class="field"><label>Nome</label><input class="input" id="co_nome" value="${escapeHtml(c.nome||"")}" /></div>
+          <div class="field"><label>E-mail</label><input class="input" id="co_email" value="${escapeHtml(c.email||"")}" /></div>
+          <div class="field"><label>Segmento</label><select class="select" id="co_seg"><option value="">Selecione...</option>${segOptions}</select></div>
+          <div class="field"><label>Subgrupo</label><select class="select" id="co_sub"><option value="">Selecione...</option>${subOptions}</select></div>
         </div>
       `;
     }
 
-    async function newConsultant(){
-      if(!can("write")) return toast("Sem permissão.", "err");
-
-      openModal({
-        title:"Novo Consultor",
-        sub:"Cadastre com Segmento/Subgrupo.",
-        bodyHtml: consultantForm({}),
-        footerHtml: `
-          <button class="btn ghost" id="mCancel">Cancelar</button>
-          <button class="btn primary" id="mSave"><i class="fa-solid fa-floppy-disk"></i> Salvar</button>
-        `
-      });
-
-      $("mCancel").onclick = closeModal;
-      $("mSave").onclick = async ()=>{
-        const nome = $("co_nome").value.trim();
-        const email = $("co_email").value.trim();
-        const segmento = $("co_seg").value;
-        const subgrupo = $("co_sub").value;
-
-        if(!nome || !email) return toast("Preencha nome e e-mail.", "err");
-        if(!segmento || !subgrupo) return toast("Selecione Segmento e Subgrupo.", "err");
-
-        try{
-          await addDoc(collection(db,"consultores"), {
-            nome, email, segmento, subgrupo,
-            createdAt: serverTimestamp(),
-            updatedAt: serverTimestamp()
-          });
-
-          closeModal();
-          toast("Consultor salvo.");
-        }catch(e){
-          toast("Erro ao salvar consultor: " + e.message, "err");
-        }
-      };
-    }
-
-    async function editConsultant(id){
-      if(!can("write")) return toast("Sem permissão.", "err");
-      const c = state.consultants.find(x=>x.id===id);
-      if(!c) return;
-
-      openModal({
-        title:"Editar Consultor",
-        sub:"Atualize dados do consultor.",
-        bodyHtml: consultantForm({data:c}),
-        footerHtml: `
-          <button class="btn ghost" id="mCancel">Cancelar</button>
-          <button class="btn primary" id="mSave"><i class="fa-solid fa-floppy-disk"></i> Salvar</button>
-        `
-      });
-
-      $("mCancel").onclick = closeModal;
-      $("mSave").onclick = async ()=>{
-        const nome = $("co_nome").value.trim();
-        const email = $("co_email").value.trim();
-        const segmento = $("co_seg").value;
-        const subgrupo = $("co_sub").value;
-
-        if(!nome || !email) return toast("Preencha nome e e-mail.", "err");
-        if(!segmento || !subgrupo) return toast("Selecione Segmento e Subgrupo.", "err");
-
-        try{
-          await updateDoc(doc(db,"consultores",id), {
-            nome, email, segmento, subgrupo,
-            updatedAt: serverTimestamp()
-          });
-
-          closeModal();
-          toast("Consultor atualizado.");
-        }catch(e){
-          toast("Erro ao atualizar consultor: " + e.message, "err");
-        }
-      };
-    }
-
-    async function delConsultant(id){
-      if(!can("admin")) return toast("Somente admin pode excluir.", "err");
-      if(!confirm("Excluir este consultor?")) return;
-      try{
-        await deleteDoc(doc(db,"consultores",id));
-        toast("Consultor excluído.");
-      }catch(e){
-        toast("Erro ao excluir consultor: " + e.message, "err");
-      }
-    }
-
-    function genPassword(){
-      const chars = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789!@#";
-      let out = "";
-      for(let i=0;i<10;i++) out += chars[Math.floor(Math.random()*chars.length)];
-      return out;
-    }
-
-    function accessForm(){
+    function accessForm(u={}){
       return `
         <div class="formGrid2">
-          <div class="field">
-            <label>Nome</label>
-            <input class="input" id="u_name" placeholder="Ex.: João Silva"/>
-          </div>
-          <div class="field">
-            <label>E-mail</label>
-            <input class="input" id="u_email" placeholder="Ex.: joao@empresa.com"/>
-          </div>
+          <div class="field"><label>Nome</label><input class="input" id="u_name" value="${escapeHtml(u.name||"")}" /></div>
+          <div class="field"><label>E-mail</label><input class="input" id="u_email" value="${escapeHtml(u.email||"")}" /></div>
           <div class="field">
             <label>Perfil</label>
             <select class="select" id="u_role">
-              <option value="viewer">leitor (consulta)</option>
-              <option value="operacional">operacional (edita)</option>
-              <option value="admin">admin (tudo)</option>
+              <option value="viewer" ${u.role==="viewer"?"selected":""}>leitor (consulta)</option>
+              <option value="operacional" ${u.role==="operacional"?"selected":""}>operacional (edita)</option>
+              <option value="admin" ${u.role==="admin"?"selected":""}>admin (tudo)</option>
             </select>
           </div>
           <div class="field">
             <label>Ativo</label>
             <select class="select" id="u_active">
-              <option value="true">Sim</option>
-              <option value="false">Não</option>
+              <option value="true" ${u.active!==false?"selected":""}>Sim</option>
+              <option value="false" ${u.active===false?"selected":""}>Não</option>
             </select>
-          </div>
-
-          <div class="field" style="grid-column:1/-1;">
-            <label>Senha (digite para definir OU deixe em branco para gerar)</label>
-            <input class="input" id="u_pass" placeholder="Digite a senha ou deixe em branco"/>
-            <div style="margin-top:6px;color:var(--muted);font-size:12px;font-weight:800;">
-              Se deixar em branco, o sistema gera automaticamente e mostra após criar.
-            </div>
           </div>
         </div>
       `;
     }
 
-    async function createAccess(){
-      if(!can("admin")) return toast("Somente admin pode criar acessos.", "err");
+    // -------------------------
+    // CRUD - Clients
+    // -------------------------
+    async function newClient(){
+      if(!can("write")) return toast("Sem permissão para criar/editar.", "err");
 
       openModal({
-        title:"Criar Acesso",
-        sub:"Cria usuário no Auth e salva perfil no Firestore.",
-        bodyHtml: accessForm(),
-        footerHtml: `
-          <button class="btn ghost" id="mCancel">Cancelar</button>
-          <button class="btn primary" id="mCreate"><i class="fa-solid fa-user-plus"></i> Criar</button>
-        `
+        title:"Novo Cliente",
+        sub:"Preencha os dados do cliente (demo local).",
+        bodyHtml: clientForm({}),
+        footerHtml: `<button class="btn ghost" id="mCancel">Cancelar</button><button class="btn primary" id="mSave"><i class="fa-solid fa-floppy-disk"></i> Salvar</button>`
+      });
+
+      const cnpjEl = $("f_cnpj");
+      cnpjEl.addEventListener("input", ()=>{ cnpjEl.value = formatCNPJ(cnpjEl.value); });
+
+      $("mCancel").onclick = closeModal;
+      $("mSave").onclick = ()=>{
+        const conta = $("f_conta").value.trim();
+        const cnpj = formatCNPJ($("f_cnpj").value.trim());
+        const comunicacaoStatus = $("f_com").value;
+        const segmento = $("f_seg").value;
+        const subgrupo = $("f_sub").value;
+        const consultorNome = $("f_cons").value.trim();
+        const observacoes = $("f_obs").value.trim();
+
+        if(!conta) return toast("Preencha Nome da Conta.", "err");
+        if(!segmento || !subgrupo) return toast("Selecione Segmento e Subgrupo.", "err");
+
+        store.clients.unshift({
+          id: uuid(), nomeConta: conta, cnpj, comunicacaoStatus, segmento, subgrupo,
+          consultorNome, observacoes, contatos:[]
+        });
+
+        saveStore();
+        closeModal();
+        toast("Cliente salvo (demo).");
+        fullRefresh();
+      };
+    }
+
+    function editClient(id){
+      if(!can("write")) return toast("Sem permissão para editar.", "err");
+      const c = store.clients.find(x=>x.id===id);
+      if(!c) return;
+
+      const oldCom = c.comunicacaoStatus || "Nao_comunicado";
+
+      openModal({
+        title:"Editar Cliente",
+        sub:"Atualize dados do cliente (demo).",
+        bodyHtml: clientForm(c),
+        footerHtml: `<button class="btn ghost" id="mCancel">Cancelar</button><button class="btn primary" id="mSave"><i class="fa-solid fa-floppy-disk"></i> Salvar</button>`
+      });
+
+      const cnpjEl = $("f_cnpj");
+      cnpjEl.addEventListener("input", ()=>{ cnpjEl.value = formatCNPJ(cnpjEl.value); });
+
+      $("mCancel").onclick = closeModal;
+      $("mSave").onclick = ()=>{
+        c.nomeConta = $("f_conta").value.trim();
+        c.cnpj = formatCNPJ($("f_cnpj").value.trim());
+        c.comunicacaoStatus = $("f_com").value;
+        c.segmento = $("f_seg").value;
+        c.subgrupo = $("f_sub").value;
+        c.consultorNome = $("f_cons").value.trim();
+        c.observacoes = $("f_obs").value.trim();
+
+        if(!c.nomeConta) return toast("Preencha Nome da Conta.", "err");
+        if(!c.segmento || !c.subgrupo) return toast("Selecione Segmento e Subgrupo.", "err");
+
+        // Sincronização local: se cliente virar "Comunicado", atualiza serviços (exceto Finalizado)
+        if(oldCom !== "Comunicado" && c.comunicacaoStatus === "Comunicado"){
+          store.services.forEach(s=>{
+            if(s.clientId===id && (s.etapa||"")!=="Finalizado"){
+              s.etapa = "Comunicado";
+            }
+          });
+          toast("Cliente comunicado. Serviços vinculados atualizados (demo).");
+        } else {
+          toast("Cliente atualizado (demo).");
+        }
+
+        saveStore();
+        closeModal();
+        if(state.selectedClientId===id) renderDetail();
+        fullRefresh();
+      };
+    }
+
+    function delClient(id){
+      if(!can("admin")) return toast("Somente admin pode excluir.", "err");
+      if(!confirm("Excluir este cliente? (demo)")) return;
+
+      // remove services linked
+      store.services = store.services.filter(s=>s.clientId!==id);
+      store.clients = store.clients.filter(c=>c.id!==id);
+
+      if(state.selectedClientId===id) state.selectedClientId=null;
+
+      saveStore();
+      toast("Cliente excluído (demo).");
+      fullRefresh();
+    }
+
+    // -------------------------
+    // Contacts in client
+    // -------------------------
+    function contactForm(ct={}){
+      return `
+        <div class="formGrid2">
+          <div class="field"><label>Nome do contato</label><input class="input" id="ct_nome" value="${escapeHtml(ct.nome||"")}" /></div>
+          <div class="field"><label>Contato (e-mail ou telefone)</label><input class="input" id="ct_val" value="${escapeHtml(ct.valor||"")}" /></div>
+        </div>
+      `;
+    }
+
+    function addContact(){
+      if(!can("write")) return toast("Sem permissão para editar.", "err");
+      const clientId = state.selectedClientId;
+      const c = store.clients.find(x=>x.id===clientId);
+      if(!c) return toast("Selecione um cliente.", "err");
+
+      openModal({
+        title:"Adicionar Contato",
+        sub:"Cadastre um e-mail ou telefone (demo).",
+        bodyHtml: contactForm({}),
+        footerHtml: `<button class="btn ghost" id="mCancel">Cancelar</button><button class="btn primary" id="mSave"><i class="fa-solid fa-floppy-disk"></i> Salvar</button>`
       });
 
       $("mCancel").onclick = closeModal;
+      $("mSave").onclick = ()=>{
+        const nome = $("ct_nome").value.trim();
+        const valor = $("ct_val").value.trim();
+        if(!nome || !valor) return toast("Preencha nome e contato.", "err");
+        c.contatos ||= [];
+        c.contatos.unshift({ id: uuid(), nome, valor });
+        saveStore();
+        closeModal();
+        toast("Contato salvo (demo).");
+        renderDetail();
+      };
+    }
 
-      $("mCreate").onclick = async ()=>{
+    function editContact(clientId, contactId){
+      if(!can("write")) return toast("Sem permissão.", "err");
+      const c = store.clients.find(x=>x.id===clientId);
+      if(!c) return;
+      const ct = (c.contatos||[]).find(x=>x.id===contactId);
+      if(!ct) return;
+
+      openModal({
+        title:"Editar Contato",
+        sub:"Atualize dados do contato (demo).",
+        bodyHtml: contactForm(ct),
+        footerHtml: `<button class="btn ghost" id="mCancel">Cancelar</button><button class="btn primary" id="mSave"><i class="fa-solid fa-floppy-disk"></i> Salvar</button>`
+      });
+
+      $("mCancel").onclick = closeModal;
+      $("mSave").onclick = ()=>{
+        ct.nome = $("ct_nome").value.trim();
+        ct.valor = $("ct_val").value.trim();
+        if(!ct.nome || !ct.valor) return toast("Preencha nome e contato.", "err");
+        saveStore();
+        closeModal();
+        toast("Contato atualizado (demo).");
+        renderDetail();
+      };
+    }
+
+    function delContact(clientId, contactId){
+      if(!can("write")) return toast("Sem permissão.", "err");
+      const c = store.clients.find(x=>x.id===clientId);
+      if(!c) return;
+      if(!confirm("Excluir este contato?")) return;
+      c.contatos = (c.contatos||[]).filter(x=>x.id!==contactId);
+      saveStore();
+      toast("Contato excluído.");
+      renderDetail();
+    }
+
+    // -------------------------
+    // CRUD - Services
+    // -------------------------
+    function newService(){
+      if(!can("write")) return toast("Sem permissão.", "err");
+
+      openModal({
+        title:"Novo Serviço",
+        sub:"Vincule ao cliente e defina status/etapa (demo).",
+        bodyHtml: serviceForm({}),
+        footerHtml: `<button class="btn ghost" id="mCancel">Cancelar</button><button class="btn primary" id="mSave"><i class="fa-solid fa-floppy-disk"></i> Salvar</button>`
+      });
+
+      bindClientSearchToId();
+
+      $("mCancel").onclick = closeModal;
+      $("mSave").onclick = ()=>{
+        const clientId = $("s_clientId").value;
+        if(!clientId) return toast("Selecione um cliente válido.", "err");
+        const tipoServico = $("s_tipoTxt").value.trim();
+        if(!tipoServico) return toast("Informe o tipo de serviço.", "err");
+
+        store.services.unshift({
+          id: uuid(),
+          clientId,
+          tipoServico,
+          placaAtivo: $("s_placa").value.trim(),
+          emDescontinuacao: $("s_des").value === "true",
+          tipoResolucao: $("s_res").value,
+          etapa: $("s_et").value,
+          resultadoFinal: $("s_rf").value,
+          observacoes: $("s_obs").value.trim()
+        });
+
+        saveStore();
+        closeModal();
+        toast("Serviço salvo (demo).");
+        fullRefresh();
+      };
+    }
+
+    function editService(id){
+      if(!can("write")) return toast("Sem permissão.", "err");
+      const s = store.services.find(x=>x.id===id);
+      if(!s) return;
+
+      openModal({
+        title:"Editar Serviço",
+        sub:"Atualize os dados do serviço (demo).",
+        bodyHtml: serviceForm(s),
+        footerHtml: `<button class="btn ghost" id="mCancel">Cancelar</button><button class="btn primary" id="mSave"><i class="fa-solid fa-floppy-disk"></i> Salvar</button>`
+      });
+
+      bindClientSearchToId();
+
+      $("mCancel").onclick = closeModal;
+      $("mSave").onclick = ()=>{
+        const clientId = $("s_clientId").value;
+        if(!clientId) return toast("Selecione um cliente válido.", "err");
+        const tipoServico = $("s_tipoTxt").value.trim();
+        if(!tipoServico) return toast("Informe o tipo de serviço.", "err");
+
+        s.clientId = clientId;
+        s.tipoServico = tipoServico;
+        s.placaAtivo = $("s_placa").value.trim();
+        s.emDescontinuacao = $("s_des").value === "true";
+        s.tipoResolucao = $("s_res").value;
+        s.etapa = $("s_et").value;
+        s.resultadoFinal = $("s_rf").value;
+        s.observacoes = $("s_obs").value.trim();
+
+        saveStore();
+        closeModal();
+        toast("Serviço atualizado (demo).");
+        fullRefresh();
+      };
+    }
+
+    function delService(id){
+      if(!can("admin")) return toast("Somente admin pode excluir.", "err");
+      if(!confirm("Excluir este serviço? (demo)")) return;
+      store.services = store.services.filter(s=>s.id!==id);
+      saveStore();
+      toast("Serviço excluído (demo).");
+      fullRefresh();
+    }
+
+    // -------------------------
+    // CRUD - Consultants
+    // -------------------------
+    function newConsultant(){
+      if(!can("write")) return toast("Sem permissão.", "err");
+
+      openModal({
+        title:"Novo Consultor",
+        sub:"Cadastre com Segmento/Subgrupo (demo).",
+        bodyHtml: consultantForm({}),
+        footerHtml: `<button class="btn ghost" id="mCancel">Cancelar</button><button class="btn primary" id="mSave"><i class="fa-solid fa-floppy-disk"></i> Salvar</button>`
+      });
+
+      $("mCancel").onclick = closeModal;
+      $("mSave").onclick = ()=>{
+        const nome = $("co_nome").value.trim();
+        const email = $("co_email").value.trim();
+        const segmento = $("co_seg").value;
+        const subgrupo = $("co_sub").value;
+
+        if(!nome || !email) return toast("Preencha nome e e-mail.", "err");
+        if(!segmento || !subgrupo) return toast("Selecione Segmento e Subgrupo.", "err");
+
+        store.consultants.unshift({ id: uuid(), nome, email, segmento, subgrupo });
+        saveStore();
+        closeModal();
+        toast("Consultor salvo (demo).");
+        fullRefresh();
+      };
+    }
+
+    function editConsultant(id){
+      if(!can("write")) return toast("Sem permissão.", "err");
+      const c = store.consultants.find(x=>x.id===id);
+      if(!c) return;
+
+      openModal({
+        title:"Editar Consultor",
+        sub:"Atualize dados do consultor (demo).",
+        bodyHtml: consultantForm(c),
+        footerHtml: `<button class="btn ghost" id="mCancel">Cancelar</button><button class="btn primary" id="mSave"><i class="fa-solid fa-floppy-disk"></i> Salvar</button>`
+      });
+
+      $("mCancel").onclick = closeModal;
+      $("mSave").onclick = ()=>{
+        c.nome = $("co_nome").value.trim();
+        c.email = $("co_email").value.trim();
+        c.segmento = $("co_seg").value;
+        c.subgrupo = $("co_sub").value;
+
+        if(!c.nome || !c.email) return toast("Preencha nome e e-mail.", "err");
+        if(!c.segmento || !c.subgrupo) return toast("Selecione Segmento e Subgrupo.", "err");
+
+        saveStore();
+        closeModal();
+        toast("Consultor atualizado (demo).");
+        fullRefresh();
+      };
+    }
+
+    function delConsultant(id){
+      if(!can("admin")) return toast("Somente admin pode excluir.", "err");
+      if(!confirm("Excluir este consultor? (demo)")) return;
+      store.consultants = store.consultants.filter(x=>x.id!==id);
+      saveStore();
+      toast("Consultor excluído (demo).");
+      fullRefresh();
+    }
+
+    // -------------------------
+    // CRUD - Users (Demo)
+    // -------------------------
+    function createAccess(){
+      if(!can("admin")) return toast("Somente admin.", "err");
+
+      openModal({
+        title:"Criar Acesso (Demo)",
+        sub:"Cria apenas na lista local (não cria no Auth).",
+        bodyHtml: accessForm({ role:"viewer", active:true }),
+        footerHtml: `<button class="btn ghost" id="mCancel">Cancelar</button><button class="btn primary" id="mCreate"><i class="fa-solid fa-user-plus"></i> Criar</button>`
+      });
+
+      $("mCancel").onclick = closeModal;
+      $("mCreate").onclick = ()=>{
         const name = $("u_name").value.trim();
         const email = $("u_email").value.trim();
         const role = $("u_role").value;
         const active = $("u_active").value === "true";
-        let password = ($("u_pass").value || "").trim();
-
         if(!name || !email) return toast("Preencha nome e e-mail.", "err");
-        if(!password) password = genPassword();
 
-        try{
-          const url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${firebaseConfig.apiKey}`;
-          const resp = await fetch(url, {
-            method:"POST",
-            headers:{ "Content-Type":"application/json" },
-            body: JSON.stringify({ email, password, returnSecureToken:true })
-          });
-          const j = await resp.json();
-          if(!resp.ok) throw new Error(j?.error?.message || "Falha ao criar usuário.");
-
-          const uid = j.localId;
-
-          await setDoc(doc(db,"users",uid), {
-            name, email, role, active,
-            createdAt: serverTimestamp(),
-            updatedAt: serverTimestamp()
-          });
-
-          toast("Acesso criado. Senha definida com sucesso.");
-          openModal({
-            title:"Acesso criado",
-            sub:"Copie e envie ao usuário.",
-            bodyHtml: `
-              <div class="card" style="box-shadow:none;">
-                <div style="font-weight:900;">Credenciais</div>
-                <div style="margin-top:10px;display:grid;gap:10px;">
-                  <div><span class="badge b-info">E-mail</span> <span style="font-weight:900;margin-left:8px;">${escapeHtml(email)}</span></div>
-                  <div><span class="badge b-info">Senha</span> <span style="font-weight:900;margin-left:8px;">${escapeHtml(password)}</span></div>
-                </div>
-              </div>
-            `,
-            footerHtml: `<button class="btn primary" id="mOk"><i class="fa-solid fa-check"></i> Ok</button>`
-          });
-          $("mOk").onclick = closeModal;
-
-        }catch(e){
-          toast(`Erro ao criar acesso: ${e.message}`, "err");
-        }
+        store.users.unshift({ id: uuid(), name, email, role, active });
+        saveStore();
+        closeModal();
+        toast("Acesso criado (demo).");
+        fullRefresh();
       };
     }
 
-    async function editUser(uid){
+    function editUser(id){
       if(!can("admin")) return toast("Somente admin.", "err");
-      const u = state.users.find(x=>x.id===uid);
+      const u = store.users.find(x=>x.id===id);
       if(!u) return;
 
       openModal({
-        title:"Editar Acesso",
-        sub:"Atualize perfil e status.",
-        bodyHtml: `
-          <div class="formGrid2">
-            <div class="field">
-              <label>Nome</label>
-              <input class="input" id="eu_name" value="${escapeHtml(u.name||"")}" />
-            </div>
-            <div class="field">
-              <label>E-mail (somente leitura)</label>
-              <input class="input" id="eu_email" value="${escapeHtml(u.email||"")}" disabled />
-            </div>
-            <div class="field">
-              <label>Perfil</label>
-              <select class="select" id="eu_role">
-                <option value="viewer" ${u.role==="viewer"?"selected":""}>leitor</option>
-                <option value="operacional" ${u.role==="operacional"?"selected":""}>operacional</option>
-                <option value="admin" ${u.role==="admin"?"selected":""}>admin</option>
-              </select>
-            </div>
-            <div class="field">
-              <label>Ativo</label>
-              <select class="select" id="eu_active">
-                <option value="true" ${u.active!==false?"selected":""}>Sim</option>
-                <option value="false" ${u.active===false?"selected":""}>Não</option>
-              </select>
-            </div>
-          </div>
-        `,
-        footerHtml: `
-          <button class="btn ghost" id="mCancel">Cancelar</button>
-          <button class="btn primary" id="mSave"><i class="fa-solid fa-floppy-disk"></i> Salvar</button>
-        `
+        title:"Editar Acesso (Demo)",
+        sub:"Atualiza apenas a lista local.",
+        bodyHtml: accessForm(u),
+        footerHtml: `<button class="btn ghost" id="mCancel">Cancelar</button><button class="btn primary" id="mSave"><i class="fa-solid fa-floppy-disk"></i> Salvar</button>`
       });
 
       $("mCancel").onclick = closeModal;
-      $("mSave").onclick = async ()=>{
-        try{
-          await updateDoc(doc(db,"users",uid), {
-            name: $("eu_name").value.trim(),
-            role: $("eu_role").value,
-            active: $("eu_active").value === "true",
-            updatedAt: serverTimestamp()
-          });
-          closeModal();
-          toast("Acesso atualizado.");
-        }catch(e){
-          toast("Erro ao atualizar acesso: " + e.message, "err");
-        }
+      $("mSave").onclick = ()=>{
+        u.name = $("u_name").value.trim();
+        u.email = $("u_email").value.trim();
+        u.role = $("u_role").value;
+        u.active = $("u_active").value === "true";
+        if(!u.name || !u.email) return toast("Preencha nome e e-mail.", "err");
+        saveStore();
+        closeModal();
+        toast("Acesso atualizado (demo).");
+        fullRefresh();
       };
     }
 
-    function drawUnidasMark(doc, x, y, withText=true){
-      doc.setDrawColor(11,95,255);
-      doc.setLineWidth(1.2);
-      doc.circle(x, y, 4.2, "S");
-      doc.setLineWidth(0.6);
-      doc.circle(x, y, 2.4, "S");
-
-      if(withText){
-        doc.setTextColor(11,95,255);
-        doc.setFont("helvetica","bold");
-        doc.setFontSize(14);
-        doc.text("unidas", x + 7.2, y + 1.6);
-        doc.setTextColor(0);
-      }
+    // -------------------------
+    // Global refresh
+    // -------------------------
+    function fullRefresh(){
+      hydrateFilters();
+      hydratePdfClientDatalist();
+      renderClients();
+      renderServices();
+      renderConsultants();
+      renderUsers();
+      refreshDashboard();
+      if(state.selectedClientId) renderDetail();
     }
 
-    function pdfHeader(doc, subtitle){
-      drawUnidasMark(doc, 18, 16, true);
-
-      doc.setFont("helvetica","bold");
-      doc.setFontSize(16);
-      doc.text("Gestão de Encerramentos", 14, 28);
-
-      doc.setFont("helvetica","normal");
-      doc.setFontSize(11);
-      doc.setTextColor(70);
-      doc.text("Gestão de Encerramentos: Serviços e Acessorização", 14, 34);
-      doc.setTextColor(0);
-
-      doc.setFontSize(10);
-      doc.setTextColor(90);
-      doc.text(`Emitido por: ${state.profile.name} (${state.profile.role})`, 14, 41);
-      doc.text(`Feito por: Raphael dos Santos`, 14, 46);
-      doc.text(`Gerado em: ${nowStr()}`, 14, 51);
-      doc.setTextColor(0);
-
-      doc.setDrawColor(220);
-      doc.line(14, 55, 196, 55);
-
-      if(subtitle){
-        doc.setFont("helvetica","bold");
-        doc.setFontSize(12);
-        doc.text(subtitle, 14, 64);
-      }
-    }
-
-    function resumoPorCliente(){
-      const rows = state.clients.map(c=>{
-        const nomeConta = c.nomeConta || "—";
-        const list = state.services.filter(s=>s.clientId===c.id);
-        const total = list.length;
-        const ativos = list.filter(s=>!isEncerrado(s)).length;
-        const encerrados = list.filter(s=>isEncerrado(s)).length;
-
-        const etapaCounts = {
-          "Comunicar Cliente": list.filter(s=>s.etapa==="Comunicar Cliente").length,
-          "Comunicado": list.filter(s=>s.etapa==="Comunicado").length,
-          "Em tratativa": list.filter(s=>s.etapa==="Em tratativa").length,
-          "Finalizado": list.filter(s=>s.etapa==="Finalizado").length,
-        };
-
-        const pendCom = (c.comunicacaoStatus==="Comunicado") ? 0 : 1;
-
-        return {
-          nomeConta,
-          cnpj: c.cnpj || "—",
-          segmento: c.segmento || "—",
-          subgrupo: c.subgrupo || "—",
-          total,
-          ativos,
-          encerrados,
-          pendCom,
-          etapaCounts
-        };
-      });
-
-      rows.sort((a,b)=> b.total - a.total);
-      return rows;
-    }
-
-    // ✅ PDF Geral sem ranking (removido)
-    function genGlobalPdf(){
-      const { jsPDF } = window.jspdf;
-      const doc = new jsPDF({ unit:"mm", format:"a4" });
-
-      pdfHeader(doc, "Relatório Executivo (Geral)");
-
-      const totalClients = state.clients.length;
-      const notificados = state.clients.filter(c=>c.comunicacaoStatus==="Comunicado").length;
-      const pendCom = Math.max(0, totalClients - notificados);
-
-      const encerrados = state.services.filter(s=>isEncerrado(s)).length;
-      const ativos = state.services.filter(s=>!isEncerrado(s)).length;
-
-      doc.autoTable({
-        startY: 70,
-        head: [["Indicador", "Valor"]],
-        body: [
-          ["Total de clientes", String(totalClients)],
-          ["Clientes notificados", String(notificados)],
-          ["Pendentes de comunicação", String(pendCom)],
-          ["Serviços ativos (em andamento)", String(ativos)],
-          ["Serviços encerrados (finalizado/desativado)", String(encerrados)]
-        ],
-        styles: { fontSize: 10, cellPadding: 2.8 },
-        headStyles: { fillColor: [246,249,255], textColor: 20 }
-      });
-
-      const etapaCounts = ETAPAS.map(et=> [et, state.services.filter(s=>s.etapa===et).length]);
-      const resAtivos = state.services.filter(s=>!isEncerrado(s));
-      const resCounts = RESOLUCOES.map(r=> [r, resAtivos.filter(s=>s.tipoResolucao===r).length]);
-
-      let y = doc.lastAutoTable.finalY + 10;
-
-      doc.setFont("helvetica","bold");
-      doc.text("Etapas (Visão geral)", 14, y);
-      doc.autoTable({
-        startY: y + 4,
-        head: [["Etapa", "Quantidade"]],
-        body: etapaCounts,
-        styles: { fontSize: 10, cellPadding: 2.6 },
-        headStyles: { fillColor: [246,249,255], textColor: 20 }
-      });
-
-      y = doc.lastAutoTable.finalY + 10;
-
-      doc.setFont("helvetica","bold");
-      doc.text("Resolução (Apenas ativos)", 14, y);
-      doc.autoTable({
-        startY: y + 4,
-        head: [["Tipo de Resolução", "Quantidade"]],
-        body: resCounts,
-        styles: { fontSize: 10, cellPadding: 2.6 },
-        headStyles: { fillColor: [246,249,255], textColor: 20 }
-      });
-
-      const top = resumoPorCliente().slice(0,15).map(r=>[
-        r.nomeConta, r.cnpj, r.segmento, r.subgrupo,
-        String(r.total),
-        String(r.ativos),
-        String(r.encerrados),
-        r.pendCom ? "Pendente" : "OK"
-      ]);
-
-      y = doc.lastAutoTable.finalY + 10;
-
-      doc.setFont("helvetica","bold");
-      doc.text("Top clientes (por serviços)", 14, y);
-      doc.autoTable({
-        startY: y + 4,
-        head: [["Cliente", "CNPJ", "Segmento", "Subgrupo", "Total", "Ativos", "Encerrados", "Com." ]],
-        body: top.length ? top : [["—","—","—","—","0","0","0","—"]],
-        styles: { fontSize: 9, cellPadding: 2.2 },
-        headStyles: { fillColor: [246,249,255], textColor: 20 }
-      });
-
-      doc.save(`Relatorio_Encerramentos_${new Date().toISOString().slice(0,10)}.pdf`);
-    }
-
-    async function genClientPdf(clientId){
-      const c = state.clients.find(x=>x.id===clientId);
-      if(!c) return toast("Selecione um cliente.", "err");
-
-      const contacts = await loadContacts(clientId);
-      const services = state.services.filter(s=>s.clientId===clientId);
-
-      const { jsPDF } = window.jspdf;
-      const doc = new jsPDF({ unit:"mm", format:"a4" });
-
-      const nomeConta = c.nomeConta || "—";
-      pdfHeader(doc, "Relatório do Cliente");
-
-      doc.setFont("helvetica","normal");
-      doc.setFontSize(10);
-      doc.text(`Cliente: ${nomeConta}`, 14, 74);
-      doc.text(`CNPJ: ${c.cnpj || "—"}`, 14, 80);
-      doc.text(`Segmento/Subgrupo: ${c.segmento || "—"} / ${c.subgrupo || "—"}`, 14, 86);
-      doc.text(`Consultor: ${c.consultorNome || "—"}`, 14, 92);
-      doc.text(`Comunicação: ${c.comunicacaoStatus==="Comunicado" ? "Comunicado" : "Pendente"}`, 14, 98);
-      doc.text(`Endereço: ${formatEndereco(c) || "—"}`, 14, 104, { maxWidth: 180 });
-
-      const st = computeClientStats(clientId);
-      const encerrados = services.filter(s=>isEncerrado(s)).length;
-      const ativos = services.filter(s=>!isEncerrado(s)).length;
-
-      doc.setFont("helvetica","bold");
-      doc.text("Indicadores do Cliente", 14, 116);
-
-      doc.autoTable({
-        startY: 120,
-        head: [["Métrica", "Qtd"]],
-        body: [
-          ["Serviços (total)", String(st.total)],
-          ["Ativos (em andamento)", String(ativos)],
-          ["Encerrados (finalizado/desativado)", String(encerrados)],
-          ["Comunicar Cliente", String(st.c0)],
-          ["Comunicado", String(st.c1)],
-          ["Em tratativa", String(st.c2)],
-          ["Finalizado (etapa)", String(st.c3)]
-        ],
-        styles: { fontSize: 10, cellPadding: 2.6 },
-        headStyles: { fillColor: [246,249,255], textColor: 20 }
-      });
-
-      let y = doc.lastAutoTable.finalY + 10;
-
-      doc.setFont("helvetica","bold");
-      doc.text("Contatos", 14, y);
-      doc.autoTable({
-        startY: y + 4,
-        head: [["Nome", "Contato"]],
-        body: contacts.length ? contacts.map(ct=>[ct.nome || "—", ct.valor || "—"]) : [["—", "Sem contatos cadastrados"]],
-        styles: { fontSize: 10, cellPadding: 2.6 },
-        headStyles: { fillColor: [246,249,255], textColor: 20 }
-      });
-
-      y = doc.lastAutoTable.finalY + 10;
-
-      doc.setFont("helvetica","bold");
-      doc.text("Serviços vinculados", 14, y);
-      doc.autoTable({
-        startY: y + 4,
-        head: [["Tipo", "Placa/Ativo", "Resolução", "Etapa", "Resultado"]],
-        body: services.length
-          ? services.map(s=>[s.tipoServico || "—", s.placaAtivo || "—", s.tipoResolucao || "—", s.etapa || "—", s.resultadoFinal || "—"])
-          : [["—","—","—","—","Sem serviços vinculados"]],
-        styles: { fontSize: 9, cellPadding: 2.2 },
-        headStyles: { fillColor: [246,249,255], textColor: 20 }
-      });
-
-      y = doc.lastAutoTable.finalY + 10;
-      doc.setFont("helvetica","bold");
-      doc.text("Observações", 14, y);
-      doc.setFont("helvetica","normal");
-      doc.setFontSize(10);
-      doc.text(doc.splitTextToSize((c.observacoes || "—"), 180), 14, y+6);
-
-      doc.save(`Relatorio_Cliente_${(nomeConta).slice(0,30).replace(/\s+/g,"_")}.pdf`);
-    }
-
-    // NAV
-    document.querySelectorAll(".navbtn").forEach(b=>{
-      b.onclick = () => showView(b.dataset.view);
-    });
-
+    // -------------------------
+    // Events
+    // -------------------------
+    document.querySelectorAll(".navbtn").forEach(b=> b.onclick = ()=> showView(b.dataset.view));
     $("btnCloseModal").onclick = closeModal;
     $("modalOverlay").addEventListener("click", (e)=>{ if(e.target.id==="modalOverlay") closeModal(); });
 
     $("btnNewClient").onclick = newClient;
     $("btnBackToClients").onclick = ()=> showView("clients");
     $("btnGoServices").onclick = ()=> showView("services");
-    $("btnEditFromDetail").onclick = ()=>{
-      if(state.selectedClientId) editClient(state.selectedClientId);
-      else toast("Selecione um cliente.", "err");
-    };
+    $("btnEditFromDetail").onclick = ()=> state.selectedClientId ? editClient(state.selectedClientId) : toast("Selecione um cliente.", "err");
     $("btnAddContact").onclick = addContact;
 
     $("btnNewService").onclick = newService;
     $("btnNewConsultant").onclick = newConsultant;
     $("btnNewAccess").onclick = createAccess;
 
-    $("btnRefresh").onclick = ()=>{
-      refreshDashboard();
-      renderClients();
-      renderServices();
-      renderConsultants();
-      renderUsers();
-      hydratePdfClientDatalist();
-      toast("Atualizado.");
-    };
+    $("btnRefresh").onclick = ()=> { fullRefresh(); toast("Atualizado."); };
 
     $("btnPdfGlobalDash").onclick = genGlobalPdf;
-    $("btnPdfClientDash").onclick = async ()=>{
+    $("btnPdfClientDash").onclick = async ()=> {
       const id = $("pdfClientId").value;
       if(!id) return toast("Selecione um cliente válido.", "err");
       await genClientPdf(id);
@@ -2752,55 +1954,49 @@
     $("conSeg").onchange = renderConsultants;
     $("conSub").onchange = renderConsultants;
 
-    $("btnLogout").onclick = async ()=>{ await signOut(auth); };
+    $("btnLogout").onclick = ()=> {
+      $("appView").style.display="none";
+      $("loginView").style.display="";
+      toast("Sessão encerrada.");
+    };
 
-    async function doLogin(){
-      $("loginErr").style.display="none";
-      const email = $("loginEmail").value.trim();
-      const pass = $("loginPass").value;
-      try{
-        await signInWithEmailAndPassword(auth, email, pass);
-      }catch(e){
-        $("loginErr").innerText = "Login inválido. Verifique e-mail/senha.";
-        $("loginErr").style.display="block";
+    $("btnResetDemo").onclick = ()=>{
+      if(confirm("Resetar dados demo?")){
+        localStorage.removeItem(LS_KEY);
+        store = loadStore();
+        toast("Demo resetado.");
       }
-    }
-    $("btnLogin").onclick = doLogin;
+    };
 
-    onAuthStateChanged(auth, async (user)=>{
-      state.user = user || null;
+    function doLogin(){
+      $("loginErr").style.display="none";
+      const email = ($("loginEmail").value||"").trim();
+      const pass = ($("loginPass").value||"").trim();
 
-      if(!user){
-        clearSubs();
-        $("appView").style.display="none";
-        $("loginView").style.display="";
+      if(pass !== "demo"){
+        $("loginErr").innerText = "Login inválido. Use senha: demo";
+        $("loginErr").style.display="block";
         return;
       }
+
+      state.profile = { role:"admin", name: email ? email.split("@")[0] : "Demo", active:true, email };
+      $("sideUserLine").innerText = `${state.profile.name} • perfil: ${state.profile.role}`;
+      $("rolePill").innerText = `perfil: ${state.profile.role}`;
+      $("sideAvatar").innerText = (state.profile.name||"R").slice(0,1).toUpperCase();
+      $("loginAvatar").innerText = (state.profile.name||"R").slice(0,1).toUpperCase();
 
       $("loginView").style.display="none";
       $("appView").style.display="";
 
-      await loadProfile(user.uid);
-
-      if(state.profile.active===false){
-        toast("Seu acesso está inativo.", "err");
-        await signOut(auth);
-        return;
-      }
-
-      document.querySelector('[data-view="access"]').style.display = can("admin") ? "" : "none";
-      $("btnNewClient").style.display = can("write") ? "" : "none";
-      $("btnNewService").style.display = can("write") ? "" : "none";
-      $("btnNewConsultant").style.display = can("write") ? "" : "none";
-
-      hydrateFilters();
       buildCharts();
-      watchData();
+      fullRefresh();
       showView("dashboard");
-    });
+      toast("Bem-vindo (demo).");
+    }
+
+    $("btnLogin").onclick = doLogin;
 
     window.addEventListener("resize", ()=> refreshDashboard());
-    $("loginView").style.display="";
   </script>
 </body>
 </html>
